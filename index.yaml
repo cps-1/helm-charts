@@ -70,6 +70,19 @@ entries:
     urls:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-contrib-0.0.20250506-N/cps1-contrib-0.0.20250506-N.tgz
     version: 0.0.20250506-N
+  cps1-crds:
+  - apiVersion: v2
+    appVersion: v0.1.0-rc3
+    created: "2025-06-06T13:51:42.09282451Z"
+    description: Helm chart to install CPS1 Custom Resource Definitions in your Kubernetes
+      cluster
+    digest: 330625bad476ce227f58dc381c316ab3491620aaf66bc8e03a5eb29eb5f70b3f
+    kubeVersion: '>= 1.31.0'
+    name: cps1-crds
+    type: application
+    urls:
+    - https://github.com/cps-1/helm-charts/releases/download/cps1-crds-0.0.20250606-N/cps1-crds-0.0.20250606-N.tgz
+    version: 0.0.20250606-N
   cps1-platform:
   - apiVersion: v2
     appVersion: 20250210-89d1ed2f
@@ -82,4 +95,4 @@ entries:
     urls:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-platform-0.1.0-rc1/cps1-platform-0.1.0-rc1.tgz
     version: 0.1.0-rc1
-generated: "2025-05-14T14:36:26.4810435Z"
+generated: "2025-06-06T13:51:42.092844317Z"
