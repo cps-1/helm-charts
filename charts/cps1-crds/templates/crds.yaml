@@ -401,10 +401,14 @@ spec:
                   properties:
                     component:
                       type: string
+                    port:
+                      format: int32
+                      type: integer
                     url:
                       type: string
                   required:
                   - component
+                  - port
                   - url
                   type: object
                 type: array
@@ -470,25 +474,15 @@ spec:
                   ports:
                     items:
                       properties:
-                        exposure:
-                          enum:
-                          - external
-                          - internal
-                          type: string
                         port:
                           format: int32
                           type: integer
                         protocol:
                           enum:
-                          - http
-                          - https
-                          - ws
-                          - wss
                           - tcp
                           - udp
                           type: string
                       required:
-                      - exposure
                       - port
                       - protocol
                       type: object
