@@ -24,6 +24,18 @@ entries:
   cps1-contrib:
   - apiVersion: v2
     appVersion: v0.1.0-rc6
+    created: "2025-06-10T23:27:23.884720353Z"
+    description: Helm chart with a collection of Resources, Templates and Packages
+      for the CPS1 Platform
+    digest: 712a8097d1c5d985afb80bd94888ed161fb9dc03a3a5c4f0651d3f49ba8f5654
+    kubeVersion: '>= 1.31.0'
+    name: cps1-contrib
+    type: application
+    urls:
+    - cps1-contrib-0.1.0-rc6.tgz
+    version: 0.1.0-rc6
+  - apiVersion: v2
+    appVersion: v0.1.0-rc6
     created: "2025-06-10T23:22:35.655646789Z"
     description: Helm chart with a collection of Resources, Templates and Packages
       for the CPS1 Platform
@@ -84,6 +96,17 @@ entries:
     version: 0.0.20250506-N
   cps1-crds:
   - apiVersion: v2
+    appVersion: v0.1.0-rc6
+    created: "2025-06-10T23:27:24.070968827Z"
+    description: CPS1 Custom Resource Definitions
+    digest: e8a74fbab7a0aed5dbd38e455ad7bc595f5058251ca4d0a4ec812e2a35487119
+    kubeVersion: '>= 1.31.0'
+    name: cps1-crds
+    type: application
+    urls:
+    - cps1-crds-v0.1.0-rc6.tgz
+    version: v0.1.0-rc6
+  - apiVersion: v2
     appVersion: v0.1.0-rc3
     created: "2025-06-06T13:51:42.09282451Z"
     description: Helm chart to install CPS1 Custom Resource Definitions in your Kubernetes
@@ -96,6 +119,18 @@ entries:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-crds-0.0.20250606-N/cps1-crds-0.0.20250606-N.tgz
     version: 0.0.20250606-N
   cps1-platform:
+  - apiVersion: v2
+    appVersion: v0.1.0-rc6
+    created: "2025-06-10T23:27:24.252066843Z"
+    description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes
+      cluster
+    digest: 67a19bde3b53f120578ffac01a2a083fd0671764451ce545645bde9abbf16c4d
+    kubeVersion: '>= 1.31.0'
+    name: cps1-platform
+    type: application
+    urls:
+    - cps1-platform-0.1.0-rc6.tgz
+    version: 0.1.0-rc6
   - apiVersion: v2
     appVersion: 20250210-89d1ed2f
     created: "2025-02-11T18:02:15.403536374Z"
@@ -119,4 +154,4 @@ entries:
     urls:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-platform-0.0.20250610-N/cps1-platform-0.0.20250610-N.tgz
     version: 0.0.20250610-N
-generated: "2025-06-10T23:22:35.791148996Z"
+generated: "2025-06-10T23:27:24.252106417Z"
