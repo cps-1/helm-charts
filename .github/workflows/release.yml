@@ -1,42 +1,33 @@
 name: Release Charts
 on:
   push:
-    branches:
-      - main
+    branch: main
 jobs:
   release:
     permissions:
       contents: write
     runs-on: ubuntu-latest
     steps:
+      # v4.1.7 https://github.com/actions/checkout/tree/v4.1.7
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
         with:
           fetch-depth: 0
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      # v4.3.0 https://github.com/Azure/setup-helm/tree/releases/v4.3.0
       - name: Setup Helm
-        uses: azure/setup-helm@v4.3.0
+        uses: azure/setup-helm@b9e51907a09c216f16ebe8536097933489208112
         with:
           version: latest
-      - name: Package Releases
-        run: |
-          DATE_TAG=$(date +'%Y%m%d')
-          mkdir -p .cr-release-packages
-          for chart in charts/*; do
-            if ! git diff --quiet HEAD~1 -- "$chart"; then
-              CHART_NAME=$(basename "$chart")
-              helm package "$chart" --destination .cr-release-packages --version "0.0.${DATE_TAG}-N"
-            fi
-          done
+      # v1.7.0 https://github.com/helm/chart-releaser-action/tree/v1.7.0
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.7.0
+        uses: helm/chart-releaser-action@cae68fefc6b5f367a0275617c9f83181ba54714f
         with:
-          skip_packaging: true
+          version: 'v1.8.1'
           skip_existing: true
-          #packages_with_index: true
-          #config: ./.github/cr.yaml
+          packages_with_index: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
