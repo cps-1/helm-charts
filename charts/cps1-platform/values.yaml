@@ -3,13 +3,19 @@
 image:
   repository: ghcr.io/cps-1/cps1
   pullPolicy: IfNotPresent
-  tag: "v0.1.0-rc3"
+  tag: "v0.1.0-rc6"
+
+# When true, extra resources will be included to properly configure TLS support for CPS1
+# Requirements:
+# - ingress-nginx controller > 1.1.0
+# - cert-manager
+setupTLS: false
 
 # Swap the fields below with the required app configuration
 config:
-  hostname: cps1.myorg.com
+  hostname: cps1.localhost
   gateway:
-    hostname: cps1.myorg.com
+    hostname: cps1.localhost
     sshPort: 2222
     httpsPort: 443
   imageRegistry:

@@ -15,8 +15,7 @@ spec:
   properties: []
   defaults:
     ports:
-      - exposure: internal
-        protocol: tcp
+      - protocol: tcp
         port: 6379
     env: []
     volumes: []

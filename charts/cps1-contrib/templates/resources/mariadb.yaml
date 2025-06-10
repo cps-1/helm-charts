@@ -34,8 +34,7 @@ spec:
       - name: VAR
         value: var
     ports:
-      - exposure: internal
-        protocol: tcp
+      - protocol: tcp
         port: 3306
     volumes:
       - name: datadir

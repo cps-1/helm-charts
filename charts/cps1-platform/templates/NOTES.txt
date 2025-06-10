@@ -1,9 +1,8 @@
-The chart can also contain a short plain text templates/NOTES.txt file
-that will be printed out after installation, and when viewing the status
-of a release. This file is evaluated as a template, and can be used to display
-usage notes, next steps, or any other information relevant to a release
-of the chart.
+CPS1 have been successfully installed on your cluster.
 
-For example, instructions could be provided for connecting to a database, or
-accessing a web UI. Since this file is printed to STDOUT when running helm install or helm status,
-it is recommended to keep the content brief and point to the README for greater detail.
+Access it on {{ if .Values.setupTLS }}https://{{ .Values.config.hostname }}{{- else }}http://{{ .Values.config.hostname }}:3001{{- end }} to create an initial Admin account.
+
+You can now proceed with installing the cps1-contrib Helm chart for extra Packages and Resouces.
+
+For detailed instructions and further information, please refer to our documentation: https://docs.cps1.tech
+

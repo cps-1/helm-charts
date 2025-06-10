@@ -23,8 +23,7 @@ spec:
       kind: secret
   defaults:
     ports:
-      - exposure: internal
-        protocol: tcp
+      - protocol: tcp
         port: 3366
     env:
       - name: PGDATA
