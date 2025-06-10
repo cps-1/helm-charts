@@ -7,8 +7,15 @@ spec:
   hostname: {{ .Values.config.hostname }}
   gateway:
     hostname: {{ .Values.config.gateway.hostname }}
+    {{- if .Values.setupTLS }}
     sshPort: {{ .Values.config.gateway.sshPort }}
     httpsPort: {{ .Values.config.gateway.httpsPort }}
+    tlsEnabled: true
+    {{- else }}
+    sshPort: 2222
+    httpPort: 8080
+    tlsEnabled: false
+    {{- end }}
   imageRegistry:
     pullHost: {{ .Values.config.imageRegistry.pullHost }}
     pushHost: {{ .Values.config.imageRegistry.pushHost }}
@@ -21,7 +28,7 @@ spec:
   oauthGitlab:
     applicationId: {{ .Values.config.gitlab.applicationId }}
     groupId: "{{ .Values.config.gitlab.groupId }}"
-    hostname: "{{ .Values.config.gitlab.hostname }}"
+    hostname: {{ .Values.config.gitlab.hostname }}
   {{- end }}
 {{- end }}
   sshKnownHosts: |

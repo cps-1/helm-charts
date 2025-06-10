@@ -36,8 +36,7 @@ spec:
       env: POSTGRES_PASSWORD
   defaults:
     ports:
-      - exposure: internal
-        protocol: tcp
+      - protocol: tcp
         port: 5432
     env:
       - name: PGDATA
