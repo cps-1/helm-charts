@@ -192,6 +192,8 @@ spec:
                                     type: string
                                   port:
                                     format: int32
+                                    maximum: 65535.0
+                                    minimum: 1024.0
                                     type: integer
                                   protocol:
                                     default: Tcp
@@ -211,6 +213,8 @@ spec:
                           - image
                           type: object
                         name:
+                          maxLength: 64
+                          minLength: 2
                           type: string
                         resource:
                           nullable: true
@@ -229,6 +233,8 @@ spec:
                                     type: string
                                   port:
                                     format: int32
+                                    maximum: 65535.0
+                                    minimum: 1024.0
                                     type: integer
                                   protocol:
                                     default: Tcp
@@ -285,6 +291,8 @@ spec:
                                     type: string
                                   port:
                                     format: int32
+                                    maximum: 65535.0
+                                    minimum: 1024.0
                                     type: integer
                                   protocol:
                                     default: Tcp
@@ -299,12 +307,20 @@ spec:
                                 required:
                                 - port
                                 type: object
+                              maxItems: 32
                               type: array
+                              x-kubernetes-validations:
+                              - message: a service component port must be unique
+                                rule: self.all(p1, self.exists_one(p2, p1==p2))
                             source:
                               nullable: true
                               properties:
                                 repository:
+                                  maxLength: 2000
                                   type: string
+                                  x-kubernetes-validations:
+                                  - message: repository url must be git or ssh
+                                    rule: self.matches('^(git|ssh|git@)([\\w\\.@\\:/\\-~]+)(\\.git)(/)?$')
                               required:
                               - repository
                               type: object
@@ -312,7 +328,11 @@ spec:
                       required:
                       - name
                       type: object
+                    maxItems: 64
                     type: array
+                    x-kubernetes-validations:
+                    - message: all services ports must be unique in the template
+                      rule: "\nself.all(\n    c1, self.all(\n        c2,\n        has(c1.service) && has(c2.service) && c1.name != c2.name ?\n        c1.service.ports.all(p1, !(p1 in c2.service.ports)) :\n        true\n    )\n)\n    "
                   tasks:
                     default: []
                     items:
@@ -444,6 +464,9 @@ spec:
         properties:
           spec:
             properties:
+              defaultVersion:
+                nullable: true
+                type: string
               defaults:
                 properties:
                   env:
@@ -511,8 +534,6 @@ spec:
                 type: string
               label:
                 type: string
-              name:
-                type: string
               properties:
                 items:
                   properties:
@@ -578,7 +599,6 @@ spec:
             - description
             - icon
             - label
-            - name
             - properties
             - versions
             type: object
@@ -619,8 +639,6 @@ spec:
               icon:
                 type: string
               label:
-                type: string
-              name:
                 type: string
               properties:
                 items:
@@ -671,7 +689,6 @@ spec:
             required:
             - icon
             - label
-            - name
             - properties
             - setupScript
             type: object
@@ -697,8 +714,7 @@ spec:
     categories: []
     kind: Template
     plural: templates
-    shortNames:
-    - cps1-wst
+    shortNames: []
     singular: template
   scope: Namespaced
   versions:
@@ -746,6 +762,8 @@ spec:
                                     type: string
                                   port:
                                     format: int32
+                                    maximum: 65535.0
+                                    minimum: 1024.0
                                     type: integer
                                   protocol:
                                     default: Tcp
@@ -765,6 +783,8 @@ spec:
                           - image
                           type: object
                         name:
+                          maxLength: 64
+                          minLength: 2
                           type: string
                         resource:
                           nullable: true
@@ -783,6 +803,8 @@ spec:
                                     type: string
                                   port:
                                     format: int32
+                                    maximum: 65535.0
+                                    minimum: 1024.0
                                     type: integer
                                   protocol:
                                     default: Tcp
@@ -839,6 +861,8 @@ spec:
                                     type: string
                                   port:
                                     format: int32
+                                    maximum: 65535.0
+                                    minimum: 1024.0
                                     type: integer
                                   protocol:
                                     default: Tcp
@@ -853,12 +877,20 @@ spec:
                                 required:
                                 - port
                                 type: object
+                              maxItems: 32
                               type: array
+                              x-kubernetes-validations:
+                              - message: a service component port must be unique
+                                rule: self.all(p1, self.exists_one(p2, p1==p2))
                             source:
                               nullable: true
                               properties:
                                 repository:
+                                  maxLength: 2000
                                   type: string
+                                  x-kubernetes-validations:
+                                  - message: repository url must be git or ssh
+                                    rule: self.matches('^(git|ssh|git@)([\\w\\.@\\:/\\-~]+)(\\.git)(/)?$')
                               required:
                               - repository
                               type: object
@@ -866,7 +898,11 @@ spec:
                       required:
                       - name
                       type: object
+                    maxItems: 64
                     type: array
+                    x-kubernetes-validations:
+                    - message: all services ports must be unique in the template
+                      rule: "\nself.all(\n    c1, self.all(\n        c2,\n        has(c1.service) && has(c2.service) && c1.name != c2.name ?\n        c1.service.ports.all(p1, !(p1 in c2.service.ports)) :\n        true\n    )\n)\n    "
                   tasks:
                     default: []
                     items:
@@ -966,6 +1002,10 @@ spec:
         properties:
           spec:
             properties:
+              defaultResourceTimeout:
+                default: 300
+                format: int32
+                type: integer
               gateway:
                 properties:
                   hostname:

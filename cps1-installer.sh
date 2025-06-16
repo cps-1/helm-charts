@@ -47,7 +47,7 @@ kubectl config set-context kind-cps1 --namespace cps1
 
 BUILDER_IMAGE="quay.io/buildah/stable:latest"
 BASE_IMAGE="ghcr.io/cps-1/base-image:2024-04-10-7f0f88d9"
-CPS1_IMAGE="ghcr.io/cps-1/cps1:v0.1.0-rc6"
+CPS1_IMAGE="ghcr.io/cps-1/cps1:v0.1.0-rc7"
 
 docker pull "${BUILDER_IMAGE}"
 docker pull "${BASE_IMAGE}"
