@@ -24,9 +24,16 @@ export VIRTUAL_ENV_DISABLE_PROMPT=true
 # shellcheck disable=SC1091
 source "${HOME}/.venv/bin/activate"
 
+uv pip install pipx
+uv run pipx install poetry
+
 echo 'VIRTUAL_ENV_DISABLE_PROMPT=1 source /home/user/.venv/bin/activate' >> /home/user/.bashrc
 
 chown -R user:user /home/user/.local
 chown -R user:user /home/user/.venv
 
 python --version
+pip --version
+pipx --version
+poetry --version
+
