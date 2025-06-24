@@ -11,8 +11,6 @@ spec:
     developed by the original creators of MySQL. It's designed to be fast,
     reliable, and user-friendly, suitable for both small and large-scale data processing. 
   versions:
-    - name: "10.5"
-      image: "mariadb:10.5"
     - name: "10.6"
       image: "mariadb:10.6"
     - name: "10.11"
@@ -20,7 +18,7 @@ spec:
     - name: "11.4"
       image: "mariadb:11.4"
     - name: "11.7"
-      image: "mariadb:11.7"
+      image: "mariadb:11.8"
   properties:
     - name: root_password
       label: Root password

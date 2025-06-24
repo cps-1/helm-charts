@@ -11,14 +11,14 @@ spec:
     relational database management system (RDBMS) emphasizing extensibility and
     SQL compliance.
   versions:
-    - name: '16.4'
-      image: 'postgres:16.4-bookworm'
-    - name: '15.8'
-      image: 'postgres:15.8-bookworm'
-    - name: '14.13'
-      image: 'postgres:14.3-bookworm'
-    - name: '13.16'
-      image: 'postgres:13.16-bookworm'
+    - name: '17.5'
+      image: 'postgres:17.5-bookworm'
+    - name: '16.9'
+      image: 'postgres:16.9-bookworm'
+    - name: '15.13'
+      image: 'postgres:15.13-bookworm'
+    - name: '14.18'
+      image: 'postgres:14.18-bookworm'
   properties:
     - name: username
       label: Username

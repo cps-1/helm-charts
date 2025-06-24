@@ -10,8 +10,12 @@ spec:
     Redis is a in-memory storage, used as a distributed, in-memory key-value
     database, cache and message broker, with optional durability.
   versions:
+    - name: '8.0'
+      image: 'redis:8.0-bookworm'
     - name: '7.4'
       image: 'redis:7.4-bookworm'
+    - name: '7.2'
+      image: 'redis:7.2-bookworm'
   properties: []
   defaults:
     ports:
