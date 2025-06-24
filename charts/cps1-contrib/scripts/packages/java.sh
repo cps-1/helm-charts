@@ -5,7 +5,7 @@ set -eo pipefail
 HOME=/home/user
 
 # shellcheck disable=SC2223
-: ${CPS1_JAVA_VERSION:="21.0.6-tem"}
+: ${CPS1_JAVA_VERSION:="21.0.7-tem"}
 
 curl -fsSL "https://get.sdkman.io/?rcupdate=false" | bash
 
@@ -24,3 +24,5 @@ sdk install gradle
 sdk install maven
 
 chown -R user:user ${HOME}/.sdkman/
+
+java --version
