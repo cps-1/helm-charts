@@ -12,7 +12,7 @@ spec:
       tip: NodeJS version
       kind: select
       required: true
-      values: ["v22", "v20", "v18"]
-      default: "v22"
+      values: ["v24", "v22", "v20"]
+      default: "v24"
   setupScript: |
     {{- .Files.Get "scripts/packages/nodejs.sh" | nindent 4 }}

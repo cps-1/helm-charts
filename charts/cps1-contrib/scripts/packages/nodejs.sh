@@ -5,7 +5,7 @@ set -euo pipefail
 HOME=/home/user
 
 # shellcheck disable=SC2223
-: ${CPS1_NODEJS_VERSION:="v22"}
+: ${CPS1_NODEJS_VERSION:="v24"}
 
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
@@ -19,4 +19,4 @@ nvm alias default "${CPS1_NODEJS_VERSION}"
 
 chown -R user:user /home/user/.nvm
 
-node --help
+node --version
