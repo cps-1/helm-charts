@@ -12,8 +12,8 @@ spec:
       tip: Go version
       kind: select
       required: true
-      values: ["1.24", "1.23"]
-      default: "1.24"
+      values: ["1.24.4", "1.23.10"]
+      default: "1.24.4"
   setupScript: |
     {{- .Files.Get "scripts/packages/go.sh" | nindent 4 }}
 
