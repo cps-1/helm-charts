@@ -6,14 +6,7 @@ spec:
   name: rust
   label: Rust
   icon: rust.svg
-  properties:
-    - name: version
-      label: Version
-      tip: Rust version
-      kind: select
-      required: true
-      values: ["1.86", "1.85"]
-      default: "1.86"
+  properties: [ ]
   setupScript: |
     {{- .Files.Get "scripts/packages/rust.sh" | nindent 4 }}
 
