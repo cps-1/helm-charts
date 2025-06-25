@@ -3,5 +3,5 @@ name: cps1-contrib
 description: Helm chart with a collection of Resources, Templates and Packages for the CPS1 Platform
 type: application
 kubeVersion: ">= 1.31.0"
-version: 0.1.0-rc7
+version: 0.1.0-rc8
 appVersion: "v0.1.0-rc7"
