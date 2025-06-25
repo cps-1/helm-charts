@@ -1,0 +1,16 @@
+apiVersion: cps1.tech/v1alpha1
+kind: Template
+metadata:
+  name: node-environment
+spec:
+  baseImage: ghcr.io/cps-1/base-image:2024-04-10-7f0f88d9
+  description: Includes latest NodeJS LTS along with other JavaScript tooling.
+  icon: /icons/nodejs.svg
+  template:
+    components:
+    - name: node_environment
+      service:
+        packages:
+        - name: nodejs
+          properties:
+            version: v24

@@ -1,0 +1,16 @@
+apiVersion: cps1.tech/v1alpha1
+kind: Template
+metadata:
+  name: python-environment
+spec:
+  baseImage: ghcr.io/cps-1/base-image:2024-04-10-7f0f88d9
+  description: Includes latest Python along with other tooling.
+  icon: /icons/python.svg
+  template:
+    components:
+    - name: python_environment
+      service:
+        packages:
+        - name: python
+          properties:
+            version: "3.13"

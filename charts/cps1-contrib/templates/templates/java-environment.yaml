@@ -1,0 +1,16 @@
+apiVersion: cps1.tech/v1alpha1
+kind: Template
+metadata:
+  name: java-environment
+spec:
+  baseImage: ghcr.io/cps-1/base-image:2024-04-10-7f0f88d9
+  description: Includes latest Java LTS version of Eclipse Temurin.
+  icon: /icons/java.svg
+  template:
+    components:
+    - name: java_environment
+      service:
+        packages:
+        - name: java
+          properties:
+            version: 21.0.7-tem

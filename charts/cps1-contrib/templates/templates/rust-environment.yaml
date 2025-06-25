@@ -1,0 +1,14 @@
+apiVersion: cps1.tech/v1alpha1
+kind: Template
+metadata:
+  name: rust-environment
+spec:
+  baseImage: ghcr.io/cps-1/base-image:2024-04-10-7f0f88d9
+  description: Includes latest Rust.
+  icon: /icons/rust.svg
+  template:
+    components:
+    - name: rust_environment
+      service:
+        packages:
+        - name: rust
