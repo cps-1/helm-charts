@@ -1,3 +1,4 @@
+{{- if has "go" .Values.includeTemplates }}
 apiVersion: cps1.tech/v1alpha1
 kind: Template
 metadata:
@@ -14,3 +15,4 @@ spec:
         - name: go
           properties:
             version: "1.24.4"
+{{- end }}

@@ -1,3 +1,4 @@
+{{- if has "php" .Values.includePackages }}
 apiVersion: cps1.tech/v1alpha1
 kind: Package
 metadata:
@@ -17,3 +18,4 @@ spec:
   setupScript: |
     {{- .Files.Get "scripts/packages/php.sh" | nindent 4 }}
 
+{{- end }}

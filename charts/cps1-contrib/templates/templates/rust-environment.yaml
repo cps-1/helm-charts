@@ -1,3 +1,4 @@
+{{- if has "rust" .Values.includeTemplates }}
 apiVersion: cps1.tech/v1alpha1
 kind: Template
 metadata:
@@ -12,3 +13,4 @@ spec:
       service:
         packages:
         - name: rust
+{{- end }}

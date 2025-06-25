@@ -1,0 +1,17 @@
+
+includeTemplates: [ ]
+
+includePackages:
+  - go
+  - rust
+  - python
+  - nodejs
+  - dotnet
+  - java
+
+includeResources:
+  - postgres
+  - mariadb
+  - mysql
+  - redis
+

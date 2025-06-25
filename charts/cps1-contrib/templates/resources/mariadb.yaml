@@ -1,3 +1,4 @@
+{{- if has "mariadb" .Values.includeResources }}
 apiVersion: cps1.tech/v1alpha1
 kind: Resource
 metadata:
@@ -40,3 +41,4 @@ spec:
     limits:
       memory: 512
       cpu: 1
+{{- end }}

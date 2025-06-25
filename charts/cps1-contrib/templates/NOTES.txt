@@ -1,2 +1,28 @@
-Notes
 
+{{- if .Values.includePackages }}
+📦 Installed packages:
+{{- range .Values.includePackages }}
+- {{ . }}
+{{- end }}
+{{ else }}
+📦 No packages were installed.
+{{ end }}
+
+
+{{- if .Values.includeResources }}
+🧩 Installed resources:
+{{- range .Values.includeResources }}
+- {{ . }}
+{{- end }}
+{{ else }}
+🧩 No resources were installed.
+{{ end }}
+
+{{- if .Values.includeTemplates }}
+📄 Installed templates:
+{{- range .Values.includeTemplates }}
+- {{ . }}-environment
+{{- end }}
+{{ else }}
+📄 No templates were installed.
+{{ end }}

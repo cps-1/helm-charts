@@ -1,16 +1,18 @@
+{{- if has "nodejs" .Values.includeTemplates }}
 apiVersion: cps1.tech/v1alpha1
 kind: Template
 metadata:
-  name: node-environment
+  name: nodejs-environment
 spec:
   baseImage: ghcr.io/cps-1/base-image:20250624
   description: Includes latest NodeJS LTS along with other JavaScript tooling.
   icon: /icons/nodejs.svg
   template:
     components:
-    - name: node_environment
+    - name: nodejs_environment
       service:
         packages:
         - name: nodejs
           properties:
             version: v24
+{{- end }}

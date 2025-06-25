@@ -1,3 +1,4 @@
+{{- if has "dotnet" .Values.includePackages }}
 apiVersion: cps1.tech/v1alpha1
 kind: Package
 metadata:
@@ -16,3 +17,4 @@ spec:
       default: "9.0"
   setupScript: |
     {{- .Files.Get "scripts/packages/dotnet.sh" | nindent 4 }}
+{{- end }}

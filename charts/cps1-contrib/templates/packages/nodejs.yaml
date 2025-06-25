@@ -1,3 +1,4 @@
+{{- if has "nodejs" .Values.includePackages }}
 apiVersion: cps1.tech/v1alpha1
 kind: Package
 metadata:
@@ -16,3 +17,4 @@ spec:
       default: "v24"
   setupScript: |
     {{- .Files.Get "scripts/packages/nodejs.sh" | nindent 4 }}
+{{- end }}
