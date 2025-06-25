@@ -3,8 +3,10 @@ FROM ubuntu:noble
 LABEL maintainer="CPS1 Tecnologia LTDA"
 LABEL name="cps1/base-template"
 
-RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get update && \
-    apt-get -y upgrade && apt-get install --no-install-recommends -y \
+RUN echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/99no-recommends && \
+    echo 'APT::Install-Suggests "false";' >> /etc/apt/apt.conf.d/99no-recommends && \
+    DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt update && \
+    apt -y upgrade && apt install --no-install-recommends -y \
     curl \
     wget \
     git \
@@ -12,6 +14,7 @@ RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt-get update && \
     ca-certificates \
     iputils-ping \
     net-tools \
+    unzip \
     zip \
     tzdata
 
@@ -21,6 +24,8 @@ RUN curl -o /tmp/vscodium.tar.gz \
     tar xzf /tmp/vscodium.tar.gz -C /opt/codium && \
     ln -s /opt/codium/bin/codium-server /usr/local/bin/codium-server && \
     rm /tmp/vscodium.tar.gz
+
+RUN echo "user ALL=NOPASSWD: /usr/bin/apt-get,/usr/bin/apt" >> /etc/sudoers
 
 RUN useradd user -s /bin/bash -m -u 10001
 
