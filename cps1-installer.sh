@@ -69,7 +69,7 @@ EOF
 
   kubectl create namespace cps1
 
-  helm repo add cps1 https://cps-1.github.io/helm-charts/
+  helm repo add cps1 https://helm.cps1.tech
 
   helm repo update
 
