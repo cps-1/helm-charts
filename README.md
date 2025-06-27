@@ -9,9 +9,9 @@ CPS1 tackles the challenges of modern software development, empowering platform 
 ## Requirements
 
 - A valid FQDN
-- Kubernetes 1.30+
+- Kubernetes >= 1.30
 - Helm 3
-- Cert Manager v1.15+
+- Cert Manager
 - Nginx Ingress Controller
 
 For further details on requirements, please refer to our documentation: https://docs.cps1.tech
@@ -19,18 +19,18 @@ For further details on requirements, please refer to our documentation: https://
 ## Add repository
 
 ```
-helm repo add cps1 https://cps-1.github.io/helm-charts
+helm repo add cps1 https://helm.cps1.tech
 helm repo update
 ```
 
-For the next steps we'll use `cps1` as the namespace and that it's already created.
+For the next steps we'll use `cps1` as the namespace and assume that it's already created.
 
-## Step 1: Install CRDs
+## Step 1: Install CPS1 Custom Resouce Definitions
+
+Installing CPS1 CRDs must be done first and its required. It has no values to customize.
 ```
 helm install -n cps1 cps1-crds cps1/cps1-crds
 ```
-
-This chart has no values to be customized, just CRDs.
 
 ## Step 2: Install the platform
 
@@ -40,20 +40,17 @@ or run:
 helm show values cps1/cps1-platform
 ```
 
-The two required values that must be set are `hostname` and `enableTLS`.
+The two required values that must be set are `hostname` and `clusterIssuer`.
 
-The `hostname` value must be a valid FQDN.
-
-The `enableTLS` value must be `true`, and requires CertManager installed on your cluster.
-
-You must 
-
-For a working setup, a valid domain name is required.
+- The `hostname` value must be a valid FQDN.
+- The `clusterIssuer` value must be `true`, and requires CertManager installed on your cluster.
 
 ```
 helm install -n cps1 cps1-platform cps1/cps1-platform --set config.hostname=<your_domain> \
-   --set enableTLS=true --set clusterIssuer=letsencrypt-prod
+   --set clusterIssuer=<your_cluster_issuer>
 ```
+
+The chart creates two LoadBalancers, make shure the External IPs given to the load balancer are the ones that the hostname is configured on your DNS.
 
 ## Step 3: Install packages, resources and templates
 
