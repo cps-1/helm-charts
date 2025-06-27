@@ -6,6 +6,17 @@ Platform engineers can easily customize and extend CPS1, eliminate manual setup,
 
 CPS1 tackles the challenges of modern software development, empowering platform engineers to easily deliver a great development experience.
 
+## Quick Install 💡 
+
+For a prof-of-concepts scenario, we provide a installation script that installs CPS1 localy, making it not necessary to provision a Kubernetes cluster.
+
+If you need a simpler use CPS1 as a proof-of-concept, you can install it localy using just Docker and Kind.
+
+```
+curl https://helm.cps1.tech/cps1-installer.sh | bash
+```
+
+
 ## Requirements
 
 - A valid FQDN
@@ -16,9 +27,7 @@ CPS1 tackles the challenges of modern software development, empowering platform 
 
 For further details on requirements, please refer to our documentation: https://docs.cps1.tech
 
-> [!TIP]
-> If you need a simpler use CPS1 as a proof-of-concept, you can install it localy using just Docker and Kind.
-> `curl https://helm.cps1.tech/cps1-installer.sh | bash`
+
 
 ## Add repository
 
