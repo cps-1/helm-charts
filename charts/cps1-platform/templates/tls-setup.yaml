@@ -1,4 +1,4 @@
-{{ if .Values.setupTLS }}
+{{ if .Values.config.tls.enabled }}
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -9,15 +9,15 @@ spec:
   revisionHistoryLimit: 1
   privateKey:
     rotationPolicy: Always
-  commonName: "*.{{- .Values.config.gateway.hostname }}"
+  commonName: "*.{{- default .Values.config.hostname .Values.config.gateway.hostname }}"
   dnsNames:
-    - "*.{{- .Values.config.gateway.hostname }}"
+    - "*.{{- default .Values.config.hostname .Values.config.gateway.hostname }}"
   usages:
     - digital signature
     - key encipherment
     - server auth
   issuerRef:
-    name: letsencrypt-prod
+    name: {{ required "A clusterIssuer is required when TLS is enabled. Make sure you set config.tls.clusterIssuer in values.yaml" .Values.config.tls.clusterIssuer }}
     kind: ClusterIssuer
 ---
 apiVersion: networking.k8s.io/v1
@@ -26,7 +26,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: 'true'
-    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: {{ .Values.config.tls.clusterIssuer }}
   name: {{ .Release.Name }}-ingress
   namespace: {{ .Release.Namespace }}
 spec:

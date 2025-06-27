@@ -1,8 +1,8 @@
 CPS1 have been successfully installed on your cluster.
 
-Access it on {{ if .Values.setupTLS }}https://{{ .Values.config.hostname }}{{- else }}http://{{ .Values.config.hostname }}:3001{{- end }} to create an initial Admin account.
+Access it on {{ if .Values.config.tls.enabled }}https://{{ .Values.config.hostname }}{{- else }}http://{{ .Values.config.hostname }}:3001{{- end }} to create an initial Admin account.
 
-You can now proceed with installing the cps1-contrib Helm chart for extra Packages and Resouces.
+You can now proceed with installing the cps1-contrib Helm chart for extra Packages, Resouces and Templates.
 
 For detailed instructions and further information, please refer to our documentation: https://docs.cps1.tech
 

@@ -51,7 +51,7 @@ spec:
           env:
             - name: RUST_LOG
               value: INFO
-          {{- if .Values.setupTLS }}
+          {{- if .Values.config.tls.enabled }}
             - name: TLS_CERT
               value: /etc/tls/tls.crt
             - name: TLS_KEY
@@ -60,7 +60,7 @@ spec:
           ports:
             - containerPort: 2222
               protocol: TCP
-     {{- if .Values.setupTLS }}
+     {{- if .Values.config.tls.enabled }}
             - containerPort: 8443
               protocol: TCP
           volumeMounts:

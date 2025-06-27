@@ -8,13 +8,15 @@ image:
 # Requirements:
 # - ingress-nginx controller > 1.1.0
 # - cert-manager
-setupTLS: false
 
 # Swap the fields below with the required app configuration
 config:
-  hostname: cps1.localhost
+  tls:
+    enabled: true
+    clusterIssuer: ""
+  hostname: ""
   gateway:
-    hostname: cps1.localhost
+    hostname: ""
     sshPort: 2222
     httpsPort: 443
   imageRegistry:

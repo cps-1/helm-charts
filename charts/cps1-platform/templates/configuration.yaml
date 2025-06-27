@@ -4,10 +4,10 @@ metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 spec:
-  hostname: {{ .Values.config.hostname }}
+  hostname: {{ required "A valid FQDN is required. Make sure you set config.hostname in values.yaml." .Values.config.hostname }}
   gateway:
-    hostname: {{ .Values.config.gateway.hostname }}
-    {{- if .Values.setupTLS }}
+    hostname: {{ default .Values.config.hostname .Values.config.gateway.hostname }}
+    {{- if .Values.config.tls.enabled }}
     sshPort: {{ .Values.config.gateway.sshPort }}
     httpsPort: {{ .Values.config.gateway.httpsPort }}
     tlsEnabled: true

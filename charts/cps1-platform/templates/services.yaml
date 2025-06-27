@@ -9,7 +9,7 @@ spec:
     app: {{ .Release.Name }}
   ports:
     - port: 3001
-{{- if not .Values.setupTLS }}
+{{- if not .Values.config.tls.enabled }}
       nodePort: 30001
   type: NodePort
 {{- end }}
@@ -23,7 +23,7 @@ spec:
   selector:
     app: {{ .Release.Name }}-gateway
   ports:
-{{- if .Values.setupTLS }}
+{{- if .Values.config.tls.enabled }}
     - name: ssh
       protocol: TCP
       port: {{ .Values.config.gateway.sshPort }}
