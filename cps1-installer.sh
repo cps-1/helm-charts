@@ -57,7 +57,7 @@ EOF
 
   BUILDER_IMAGE="quay.io/buildah/stable:latest"
   BASE_IMAGE="ghcr.io/cps-1/base-image:20250624"
-  CPS1_IMAGE="ghcr.io/cps-1/cps1:v0.1.0-rc7"
+  CPS1_IMAGE="ghcr.io/cps-1/cps1:v0.1.0-rc8"
 
   docker pull "${BUILDER_IMAGE}"
   docker pull "${BASE_IMAGE}"
@@ -73,11 +73,12 @@ EOF
 
   helm repo update
 
-  helm install -n cps1 --devel cps1-crds cps1/cps1-crds
+  helm install -n cps1 cps1-crds cps1/cps1-crds
 
-  helm install -n cps1 --devel cps1-platform cps1/cps1-platform
+  helm install -n cps1 cps1-platform cps1/cps1-platform --set config.tls.enabled=false \
+	  --set config.hostname=cps1.localhost
 
-  helm install -n cps1 --devel cps1-contrib cps1/cps1-contrib
+  helm install -n cps1 cps1-contrib cps1/cps1-contrib
 
 }
 
