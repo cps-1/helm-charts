@@ -10,11 +10,15 @@ CPS1 tackles the challenges of modern software development, empowering platform 
 
 - A valid FQDN
 - Kubernetes >= 1.30
-- Helm 3
+- Helm
 - Cert Manager
 - Nginx Ingress Controller
 
 For further details on requirements, please refer to our documentation: https://docs.cps1.tech
+
+> [!TIP]
+> If you need a simpler use CPS1 as a proof-of-concept, you can install it localy using just Docker and Kind.
+> `curl https://helm.cps1.tech/cps1-installer.sh | bash`
 
 ## Add repository
 
@@ -23,7 +27,7 @@ helm repo add cps1 https://helm.cps1.tech
 helm repo update
 ```
 
-For the next steps we'll use `cps1` as the namespace and assume that it's already created.
+For the next steps we'll use `cps1` as the namespace and assume it's already created.
 
 ## Step 1: Install CPS1 Custom Resouce Definitions
 
@@ -43,14 +47,14 @@ helm show values cps1/cps1-platform
 The two required values that must be set are `hostname` and `clusterIssuer`.
 
 - The `hostname` value must be a valid FQDN.
-- The `clusterIssuer` value must be `true`, and requires CertManager installed on your cluster.
+- The `clusterIssuer` is required do properly emit valid certificates for each workspace, requiring CertManager installed on your cluster.
 
 ```
 helm install -n cps1 cps1-platform cps1/cps1-platform --set config.hostname=<your_domain> \
-   --set clusterIssuer=<your_cluster_issuer>
+   --set config.tls.clusterIssuer=<your_cluster_issuer>
 ```
 
-The chart creates two LoadBalancers, make shure the External IPs given to the load balancer are the ones that the hostname is configured on your DNS.
+The chart creates a LoadBalancer, make shure the External IPs given to the load balancer are the ones that the hostname is configured on your DNS.
 
 ## Step 3: Install packages, resources and templates
 
