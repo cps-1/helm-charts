@@ -4,7 +4,6 @@ kind: Package
 metadata:
   name: python
 spec:
-  name: python
   label: Python
   icon: python.svg
   properties:

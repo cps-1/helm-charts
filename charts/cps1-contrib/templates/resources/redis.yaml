@@ -4,7 +4,6 @@ kind: Resource
 metadata:
   name: redis
 spec:
-  name: redis
   label: Redis
   icon: redis.svg
   description: >-

@@ -4,7 +4,6 @@ kind: Package
 metadata:
   name: rust
 spec:
-  name: rust
   label: Rust
   icon: rust.svg
   properties: [ ]

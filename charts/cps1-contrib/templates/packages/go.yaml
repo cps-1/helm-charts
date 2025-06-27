@@ -4,7 +4,6 @@ kind: Package
 metadata:
   name: go
 spec:
-  name: go
   label: Go
   icon: go.svg
   properties:

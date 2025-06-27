@@ -4,7 +4,6 @@ kind: Resource
 metadata:
   name: postgres
 spec:
-  name: postgres
   label: PostgreSQL
   icon: postgresql.svg
   description: >-

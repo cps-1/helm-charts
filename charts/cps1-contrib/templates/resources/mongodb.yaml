@@ -4,7 +4,6 @@ kind: Resource
 metadata:
   name: mongodb
 spec:
-  name: mongodb
   label: MongoDB
   icon: mongodb.svg
   description: >-

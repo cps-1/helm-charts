@@ -4,7 +4,6 @@ kind: Resource
 metadata:
   name: kafka
 spec:
-  name: kafka
   label: Kafka
   icon: kafka.svg
   description: >-

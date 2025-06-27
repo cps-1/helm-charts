@@ -12,6 +12,5 @@ includePackages:
 includeResources:
   - postgres
   - mariadb
-  - mysql
   - redis
 

@@ -4,7 +4,6 @@ kind: Package
 metadata:
   name: php
 spec:
-  name: php
   label: PHP
   icon: php.svg
   properties:

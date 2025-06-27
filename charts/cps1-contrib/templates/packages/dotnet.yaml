@@ -4,7 +4,6 @@ kind: Package
 metadata:
   name: dotnet
 spec:
-  name: dotnet
   label: Microsoft .NET
   icon: dotnet.svg
   properties:

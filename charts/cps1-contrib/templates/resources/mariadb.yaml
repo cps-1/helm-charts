@@ -4,7 +4,6 @@ kind: Resource
 metadata:
   name: mariadb
 spec:
-  name: mariadb
   label: MariaDB
   icon: mariadb.svg
   description: >-

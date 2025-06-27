@@ -4,7 +4,6 @@ kind: Package
 metadata:
   name: java
 spec:
-  name: java
   label: Java
   icon: java.svg
   properties:

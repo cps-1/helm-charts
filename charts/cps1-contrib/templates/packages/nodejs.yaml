@@ -4,7 +4,6 @@ kind: Package
 metadata:
   name: nodejs
 spec:
-  name: nodejs
   label: Node.js
   icon: nodejs.svg
   properties:
