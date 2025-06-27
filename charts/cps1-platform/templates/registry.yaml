@@ -37,9 +37,6 @@ spec:
           env:
             - name: REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY
               value: "/var/lib/registry"
-          volumeMounts:
-            - name: registry-storage
-              mountPath: /var/lib/registry
       volumes:
         - name: registry-storage
           persistentVolumeClaim:
