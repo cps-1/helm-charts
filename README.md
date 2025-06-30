@@ -41,7 +41,7 @@ CPS1 requires two DNS records:
 The availability of IP addresses for the Ingress and LoadBalancer depends on how your cluster is provisioned and managed.
 
 For full details on DNS setup, refer to the official documentation:
-https://docs.cps1.tech
+[https://docs.cps1.tech](https://docs.cps1.tech)
 
 ### 3. Add CPS1 chart repository
 
