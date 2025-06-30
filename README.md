@@ -87,7 +87,7 @@ For details about supported languages, tools, and configurations, visit the CPS1
 
 The command below installs all packages and resources, and includes only the development environment templates for NodeJS and Python.
 ```
-helm install -n cps1 cps1-contrib cps1/cps1-contrib --set includeTemplates={nodejs,python}
+helm install -n cps1 cps1-contrib cps1/cps1-contrib --set 'includeTemplates={nodejs,python}'
 ```
 
 We welcome contributions of additional packages, resources, and templates to CPS1 Contrib!
