@@ -93,3 +93,16 @@ helm install -n cps1 cps1-contrib cps1/cps1-contrib --set includeTemplates={node
 We welcome contributions of additional packages, resources, and templates to CPS1 Contrib!
 
 If you encounter any issues or have feedback, please open an issue in our repository: [https://github.com/cps-1/cps1](https://github.com/cps-1/cps1)
+
+### 7. Licensing terms
+
+You are using CPS1 Community Edition.
+
+It is free to use within your organization, limited to 10 active users and one Kubernetes cluster.
+
+For teams over 10 users or multiple clusters, upgrade to a paid license.
+
+You'll get full support and no free edition restrictions.
+
+For all the details, we strongly recommend reading the full [CPS1 Community Edition End User License Agreement (EULA)](https://cps1.tech/eula).
+
