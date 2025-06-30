@@ -1,6 +1,14 @@
-CPS1 have been successfully installed on your cluster.
+🚀 CPS1 Community Edition have been successfully installed on your cluster.
 
-Access it on {{ if .Values.config.tls.enabled }}https://{{ .Values.config.hostname }}{{- else }}http://{{ .Values.config.hostname }}:3001{{- end }} to create an initial Admin account.
+Access it on ▶️  {{ if .Values.config.tls.enabled }}https://{{ .Values.config.hostname }}{{- else }}http://{{ .Values.config.hostname }}:3001{{- end }} to create an initial Admin account.
+
+It is free to use within your organization, limited to 10 active users and one Kubernetes cluster.
+
+For teams over 10 users or multiple clusters, upgrade to a paid license.
+
+You'll get full support and no free edition restrictions.
+
+⚠️  For all the details, we strongly recommend reading the full CPS1 Community Edition End User License Agreement (EULA): https://cps1.tech/eula
 
 You can now proceed with installing the cps1-contrib Helm chart for extra Packages, Resouces and Templates.
 
