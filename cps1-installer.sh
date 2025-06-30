@@ -78,7 +78,7 @@ EOF
   helm install -n cps1 cps1-platform cps1/cps1-platform --set config.tls.enabled=false \
 	  --set config.hostname=cps1.localhost
 
-  helm install -n cps1 cps1-contrib cps1/cps1-contrib
+  helm install -n cps1 cps1-contrib cps1/cps1-contrib --set 'includeTemplates={nodejs,python}'
 
 }
 
