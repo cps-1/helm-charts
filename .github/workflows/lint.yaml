@@ -1,0 +1,32 @@
+name: Lint Charts
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      # v4.1.7 https://github.com/actions/checkout/tree/v4.1.7
+      - name: Checkout repository
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+
+      - name: Set up ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      # v4.3.0 https://github.com/Azure/setup-helm/tree/releases/v4.3.0
+      - name: Set up Helm
+        uses: azure/setup-helm@b9e51907a09c216f16ebe8536097933489208112
+
+      - name: Run ShellCheck on all .sh files
+        run: |
+          find . -type f -name "*.sh" -exec shellcheck {} +
+
+      - name: Run Helm Lint on all charts
+        run: |
+          for chart in charts/*; do
+            if [ -d "$chart" ]; then
+              helm lint --strict "$chart"
+            fi
+          done
+

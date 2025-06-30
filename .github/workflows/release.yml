@@ -1,7 +1,8 @@
 name: Release Charts
 on:
   push:
-    branch: main
+    branches:
+      - main
 jobs:
   release:
     permissions:
