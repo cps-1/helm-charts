@@ -272,6 +272,18 @@ entries:
   cps1-platform:
   - apiVersion: v2
     appVersion: v0.1.0
+    created: "2025-07-04T20:10:17.60820676Z"
+    description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes
+      cluster
+    digest: ae340c3109a0ccd82cd543f23e431a23e4ab8e61e89c7df3ba64e2a4311fc774
+    kubeVersion: '>= 1.30.0-0'
+    name: cps1-platform
+    type: application
+    urls:
+    - cps1-platform-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: v0.1.0
     created: "2025-07-04T18:06:42.725638145Z"
     description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes
       cluster
@@ -377,4 +389,4 @@ entries:
     urls:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-platform-0.0.20250610-N/cps1-platform-0.0.20250610-N.tgz
     version: 0.0.20250610-N
-generated: "2025-07-04T18:06:42.725869009Z"
+generated: "2025-07-04T20:10:17.608315233Z"
