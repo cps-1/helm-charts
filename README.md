@@ -77,8 +77,6 @@ To review all configurable options, including GitHub and GitLab integration, run
 helm show values cps1/cps1-platform
 ```
 
-Great! You can now use CPS1 for free with up to 10 developers. To add more seats, contact our team at [contact@cps1.tech](mailto:contact@cps1.tech).
-
 ### 6. Install packages, resources and templates
 
 CPS1 Contrib is a curated collection of packages, resources, and templates that extend the capabilities of the CPS1 platform.
@@ -96,13 +94,11 @@ If you encounter any issues or have feedback, please open an issue in our reposi
 
 ### 7. Licensing terms
 
-You are using CPS1 Community Edition.
+You're using CPS1 Community Edition.
 
-It is free to use within your organization, limited to 10 active users and one Kubernetes cluster.
+It's free for up to 5 users and one Kubernetes cluster within your organization.
 
-For teams over 10 users or multiple clusters, upgrade to a paid license.
+For full terms, read the [CPS1 Community Edition End User License Agreement (EULA)](https://cps1.tech/eula).
 
-You'll get full support and no free edition restrictions.
-
-For all the details, we strongly recommend reading the full [CPS1 Community Edition End User License Agreement (EULA)](https://cps1.tech/eula).
+Need more users? Upgrade for full support and no usage limits contacting our team at [contact@cps1.tech](mailto:contact@cps1.tech)
 
