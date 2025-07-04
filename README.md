@@ -10,7 +10,7 @@ CPS1 tackles the challenges of modern software development, empowering platform 
 
 For proof-of-concept scenarios, we provide an installation script that installs CPS1 locally, without requiring a Kubernetes cluster.
 
-1. Prerequisites
+### 1. Prerequisites
 
 Ensure the following tools are installed on your system:
 - Docker
@@ -18,13 +18,13 @@ Ensure the following tools are installed on your system:
 - Helm
 - kubectl
 
-2. Install Command
+### 2. Install Command
 
 ```
 curl https://helm.cps1.tech/cps1-installer.sh | bash
 ```
 
-## ☁️ Kubernetes Deployment
+## ☁️  Kubernetes Deployment
 
 ### 1. Infrastructure requirements
 - Kubernetes version 1.30 or higher
