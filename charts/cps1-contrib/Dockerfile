@@ -16,7 +16,8 @@ RUN echo 'APT::Install-Recommends "false";' > /etc/apt/apt.conf.d/99no-recommend
     net-tools \
     unzip \
     zip \
-    tzdata
+    tzdata \
+    sudo
 
 RUN curl -o /tmp/vscodium.tar.gz \
     -L https://github.com/VSCodium/vscodium/releases/download/1.101.03933/vscodium-reh-web-linux-x64-1.101.03933.tar.gz && \
