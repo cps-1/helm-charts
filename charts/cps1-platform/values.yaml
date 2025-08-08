@@ -1,15 +1,7 @@
-# If you're pushing the image into a private repository update the values
-# below to use the correct repository
 image:
   repository: ghcr.io/cps-1/cps1
   pullPolicy: IfNotPresent
 
-# When true, extra resources will be included to properly configure TLS support for CPS1
-# Requirements:
-# - ingress-nginx controller > 1.1.0
-# - cert-manager
-
-# Swap the fields below with the required app configuration
 config:
   tls:
     enabled: true
@@ -37,3 +29,6 @@ config:
   # license key - uncomment and set if needed
   # license:
 
+gateway:
+  service:
+    annotations: {}

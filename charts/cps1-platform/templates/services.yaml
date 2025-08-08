@@ -19,6 +19,10 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-gateway
   namespace: {{ .Release.Namespace }}
+{{- if .Values.gateway.service.annotations }}
+  annotations:
+{{ toYaml .Values.gateway.service.annotations | indent 4 }}
+{{- end }}
 spec:
   selector:
     app: {{ .Release.Name }}-gateway
