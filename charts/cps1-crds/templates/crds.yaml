@@ -271,8 +271,7 @@ spec:
                                   name:
                                     type: string
                                   properties:
-                                    additionalProperties:
-                                      type: string
+                                    additionalProperties: true
                                     default: {}
                                     type: object
                                 required:
@@ -629,6 +628,94 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns: []
+    name: v1alpha2
+    schema:
+      openAPIV3Schema:
+        description: Auto-generated derived type for PackageSpec via `CustomResource`
+        properties:
+          spec:
+            properties:
+              icon:
+                properties:
+                  svg:
+                    description: 'The complete svg image with enclosing tags. E.g: ``` <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <title>Title</title> <path d="(...)"/> </svg> ```'
+                    maxLength: 20000
+                    nullable: true
+                    type: string
+                  url:
+                    maxLength: 2000
+                    nullable: true
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: an icon should either define a url or an svg
+                  rule: (has(self.url) && !has(self.svg)) || (!has(self.url) && has(self.svg))
+              label:
+                type: string
+              properties:
+                items:
+                  properties:
+                    default:
+                      description: A default value for the property. Used to pre-populate forms in user interfaces. If this propetry is required and received an empty value, this value will be used if available; otherwise it'll err.
+                      nullable: true
+                      type: string
+                    kind:
+                      description: What is the value type of this property.
+                      enum:
+                      - string
+                      - text
+                      - secret
+                      - number
+                      - select
+                      - multi
+                      - tag
+                      type: string
+                    label:
+                      description: A friendly name to describe this property. This will appear on user interfaces.
+                      type: string
+                    name:
+                      description: The property identifier. Must be unique across the collection of properties from this resource.
+                      type: string
+                    required:
+                      description: If this property is required or if its optional.
+                      type: boolean
+                    tip:
+                      description: Complementary text to help the user to fill the property value. This will appear on the user interface.
+                      nullable: true
+                      type: string
+                    values:
+                      description: A list of values available for the property. This is used if the kind is select, multi, or tags.
+                      items:
+                        type: string
+                      nullable: true
+                      type: array
+                  required:
+                  - kind
+                  - label
+                  - name
+                  - required
+                  type: object
+                type: array
+              setupScript:
+                type: string
+            required:
+            - icon
+            - label
+            - properties
+            - setupScript
+            type: object
+          status:
+            nullable: true
+            type: object
+        required:
+        - spec
+        title: Package
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+  - additionalPrinterColumns: []
     name: v1alpha1
     schema:
       openAPIV3Schema:
@@ -700,7 +787,7 @@ spec:
         title: Package
         type: object
     served: true
-    storage: true
+    storage: false
     subresources:
       status: {}
 ---
@@ -841,8 +928,7 @@ spec:
                                   name:
                                     type: string
                                   properties:
-                                    additionalProperties:
-                                      type: string
+                                    additionalProperties: true
                                     default: {}
                                     type: object
                                 required:
