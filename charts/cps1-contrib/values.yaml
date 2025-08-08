@@ -3,16 +3,16 @@ includeTemplates: [ ]
 
 includePackages:
   - apt
-  - go
-  - rust
-  - python
-  - nodejs
   - dotnet
+  - go
   - java
   - kubectl
+  - nodejs
+  - python
+  - rust
 
 includeResources:
-  - postgres
   - mariadb
+  - postgres
   - redis
 
