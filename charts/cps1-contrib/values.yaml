@@ -9,6 +9,7 @@ includePackages:
   - nodejs
   - dotnet
   - java
+  - kubectl
 
 includeResources:
   - postgres
