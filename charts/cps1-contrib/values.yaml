@@ -2,6 +2,7 @@
 includeTemplates: [ ]
 
 includePackages:
+  - apt
   - go
   - rust
   - python
