@@ -37,3 +37,6 @@ config:
   # license key - uncomment and set if needed
   # license:
 
+gateway:
+  service:
+    annotations: {}
