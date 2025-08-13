@@ -57,7 +57,7 @@ EOF
 
   BUILDER_IMAGE="quay.io/buildah/stable:latest"
   BASE_IMAGE="ghcr.io/cps-1/base-image:20250624"
-  CPS1_IMAGE="ghcr.io/cps-1/cps1:v0.1.0"
+  CPS1_IMAGE="ghcr.io/cps-1/cps1:latest"
 
   docker pull "${BUILDER_IMAGE}"
   docker pull "${BASE_IMAGE}"
