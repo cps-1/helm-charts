@@ -1,39 +1,55 @@
 #!/bin/bash
-
 set -euo pipefail
 
-# shellcheck disable=SC2223
-: ${CPS1_PYTHON_VERSION:="3.13"}
-
+: "${CPS1_PYTHON_VERSION:='3.13'}"
+FULL_VERSION="3.13.7"
 HOME=/home/user
 
-curl -LsSf https://astral.sh/uv/install.sh | sh
+case $CPS1_PYTHON_VERSION in
+  3.9)
+    FULL_VERSION="3.9.23"
+    ;;
+  3.10)
+    FULL_VERSION="3.10.18"
+    ;;
+  3.11)
+    FULL_VERSION="3.11.13"
+    ;;
+  3.12)
+    FULL_VERSION="3.12.11"
+    ;;
+  # Default to latest stable (3.13)
+  *)
+    FULL_VERSION="3.13.7"
+    ;;
+esac
 
-# shellcheck disable=SC1091
-source $HOME/.local/bin/env
+apt-get install -y zstd=1.5.5+dfsg2-2build1
 
-uv python install "$CPS1_PYTHON_VERSION" --default --preview
+curl -o python.tar.zst \
+    -L "https://github.com/astral-sh/python-build-standalone/releases/download/20250918/cpython-${FULL_VERSION}+20250918-x86_64-unknown-linux-gnu-debug-full.tar.zst" && \
+    mkdir /opt/python && \
+    tar axf python.tar.zst -C /opt/python && \
+    rm python.tar.zst
 
-# Workaround for https://github.com/astral-sh/python-build-standalone/issues/380
-# shellcheck disable=SC2155,SC2046
-export PATH=$(dirname $(realpath $(which python))):$PATH
+apt-get remove -y --auto-remove zstd
 
-python -m venv $HOME/.venv
+/opt/python/python/install/bin/python -m venv $HOME/.venv
 
-export VIRTUAL_ENV_DISABLE_PROMPT=true
-# shellcheck disable=SC1091
-source "${HOME}/.venv/bin/activate"
+echo "VIRTUAL_ENV_DISABLE_PROMPT=1 source ${HOME}/.venv/bin/activate" >> "${HOME}/.bashrc"
 
-uv pip install pipx
-uv run pipx install poetry
-
-echo 'VIRTUAL_ENV_DISABLE_PROMPT=1 source /home/user/.venv/bin/activate' >> /home/user/.bashrc
-
-chown -R user:user /home/user/.local
-chown -R user:user /home/user/.venv
-
-python --version
-pip --version
-pipx --version
-poetry --version
-
+echo "Checking package managers"
+if [[ -n "${CPS1_PYTHON_PACKAGE_MANAGER:-}" ]]; then
+  echo "Installing $CPS1_PYTHON_PACKAGE_MANAGER"
+  $HOME/.venv/bin/pip install "$CPS1_PYTHON_PACKAGE_MANAGER"
+else
+  echo "No package manager to install"
+fi
+echo "Checking extra packages"
+if [[ -n "${CPS1_PYTHON_PIP_PACKAGES:-}" ]]; then
+  echo "Installing $CPS1_PYTHON_PIP_PACKAGES"
+  EXTRA_PACKAGES=$(echo "$CPS1_PYTHON_PIP_PACKAGES" | tr -d '[]' | tr ',' ' ')
+  $HOME/.venv/bin/pip install "$EXTRA_PACKAGES"
+else
+  echo "No extra packages to install"
+fi
