@@ -15,4 +15,5 @@ includeResources:
   - mariadb
   - postgres
   - redis
+  - mysql
 
