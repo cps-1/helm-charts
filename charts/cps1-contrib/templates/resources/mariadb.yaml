@@ -71,8 +71,6 @@ spec:
       source: ${input.root_password}
     - name: host
       source: ${svc.name}.${svc.namespace}.svc.cluster.local
-    - name: replicas
-      source: ${sts.status.replicas}
   resources:
     - id: sts
       template:
