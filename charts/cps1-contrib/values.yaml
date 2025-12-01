@@ -15,4 +15,21 @@ includeResources:
   - mariadb
   - postgres
   - redis
+  - mysql
 
+resources: {}
+#
+# Examples:
+#
+# awsrdspostgres:
+#   allocatedStorage: 10
+#   dbInstanceClass: "db.t4g.micro"
+#   dbSubnetGroupName: "yourdbsubnet"
+#   vpcSecurityGroupIDs:
+#     - sg-12345678910111213
+#   engineVersion: "17.6"
+# awsauroramysql:
+#   engineVersion: "8.0.mysql_aurora.3.08.2"
+#   dbSubnetGroupName: "yourdbsubnet"
+#   vpcSecurityGroupIDs:
+#     - sg-12345678910111213

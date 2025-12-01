@@ -1,16 +1,16 @@
-{{- if has "mariadb" .Values.includeResources }}
+{{- if has "mysql" .Values.includeResources }}
 apiVersion: cps1.tech/v1alpha1
 kind: ResourceSet
 metadata:
-  name: mariadb
+  name: mysql
 spec:
-  label: MariaDB
+  label: MySQL
   icon:
     svg: |
-      {{- .Files.Get "images/mariadb.svg" | nindent 6 }}
+      {{- .Files.Get "images/mysql.svg" | nindent 6 }}
   description: >-
-    MariaDB is an open-source database developed by Oracle. With its proven
-    performance, reliability, and ease-of-use, MariaDB has become the leading
+    MySQL is an open-source database developed by Oracle. With its proven
+    performance, reliability, and ease-of-use, MySQL has become the leading
     database choice for web-based applications, used by high-profile web properties
     including Facebook, Twitter, YouTube, Yahoo! and many more.
   input:
@@ -24,12 +24,12 @@ spec:
       label: Version
       kind: select
       required: true
-      values: ['10.6', '10.11', '11.4', '11.8', '12.1']
-      default: '12.1'
+      values: ['8.0', '8.4', '9.5']
+      default: '9.5'
     - name: minmemory
       label: Minimum Memory
       tip: |
-        How much memory in Megabytes should be reserved for this MariaDB
+        How much memory in Megabytes should be reserved for this MySQL
         instance
       kind: number
       required: true
@@ -37,7 +37,7 @@ spec:
     - name: maxmemory
       label: Maximum Memory
       tip: |
-        How much memory in Megabytes this MariaDB instance can consume. If
+        How much memory in Megabytes this MySQL instance can consume. If
         it extrapolates this value the database will restart.
       kind: number
       required: true
@@ -45,7 +45,7 @@ spec:
     - name: mincpu
       label: Minimum CPU
       tip: |
-        How much CPU time in milliCPUs should be reserved for this MariaDB
+        How much CPU time in milliCPUs should be reserved for this MySQL
         instance
       kind: number
       required: true
@@ -53,7 +53,7 @@ spec:
     - name: maxcpu
       label: Maximum CPU
       tip: |
-        How much CPU time in milliCPUs this MariaDB instance can consume. If
+        How much CPU time in milliCPUs this MySQL instance can consume. If
         it extrapolates this value the database process will experience CPU
         throttling.
       kind: number
@@ -62,7 +62,7 @@ spec:
     - name: storage
       label: Storage
       tip: |
-        How much storage in Gigabytes this MariaDB will have available.
+        How much storage in Gigabytes this MySQL will have available.
       kind: number
       required: true
       default: '5'
@@ -93,8 +93,8 @@ spec:
                 app.kubernetes.io/instance: ${sts.name}
             spec:
               containers:
-                - image: mariadb:${input.version}
-                  name: mariadb
+                - image: mysql:${input.version}
+                  name: mysql
                   resources:
                     requests:
                       memory: ${input.minmemory}Mi
@@ -107,10 +107,10 @@ spec:
                       value: ${input.root_password}
                   ports:
                     - containerPort: 3306
-                      name: mariadb
+                      name: mysql
                       protocol: TCP
                   volumeMounts:
-                    - mountPath: /var/lib/mariadb
+                    - mountPath: /var/lib/mysql
                       name: ${sts.name}-storage
               volumes:
                 - name: ${sts.name}-storage
@@ -130,7 +130,7 @@ spec:
         kind: Service
         spec:
           ports:
-            - name: mariadb
+            - name: mysql
               port: 3306
               protocol: TCP
               targetPort: 3306

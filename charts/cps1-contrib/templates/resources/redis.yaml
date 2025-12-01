@@ -1,29 +1,104 @@
 {{- if has "redis" .Values.includeResources }}
 apiVersion: cps1.tech/v1alpha1
-kind: Resource
+kind: ResourceSet
 metadata:
   name: redis
 spec:
   label: Redis
-  icon: redis.svg
+  icon:
+    svg: <svg fill="#FF4438" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Redis</title><path d="M22.71 13.145c-1.66 2.092-3.452 4.483-7.038 4.483-3.203 0-4.397-2.825-4.48-5.12.701 1.484 2.073 2.685 4.214 2.63 4.117-.133 6.94-3.852 6.94-7.239 0-4.05-3.022-6.972-8.268-6.972-3.752 0-8.4 1.428-11.455 3.685C2.59 6.937 3.885 9.958 4.35 9.626c2.648-1.904 4.748-3.13 6.784-3.744C8.12 9.244.886 17.05 0 18.425c.1 1.261 1.66 4.648 2.424 4.648.232 0 .431-.133.664-.365a100.49 100.49 0 0 0 5.54-6.765c.222 3.104 1.748 6.898 6.014 6.898 3.819 0 7.604-2.756 9.33-8.965.2-.764-.73-1.361-1.261-.73zm-4.349-5.013c0 1.959-1.926 2.922-3.685 2.922-.941 0-1.664-.247-2.235-.568 1.051-1.592 2.092-3.225 3.21-4.973 1.972.334 2.71 1.43 2.71 2.619z"/></svg>
   description: >-
     Redis is a in-memory storage, used as a distributed, in-memory key-value
     database, cache and message broker, with optional durability.
-  versions:
-    - name: '8.0'
-      image: 'redis:8.0-bookworm'
-    - name: '7.4'
-      image: 'redis:7.4-bookworm'
-    - name: '7.2'
-      image: 'redis:7.2-bookworm'
-  properties: []
-  defaults:
-    ports:
-      - protocol: tcp
-        port: 6379
-    env: []
-    volumes: []
-    limits:
-      memory: 512
-      cpu: 1
+  input:
+    - name: version
+      label: Version
+      kind: select
+      required: true
+      values: ['7.4', '8.0', '8.2']
+      default: '8.2'
+    - name: minmemory
+      label: Minimum Memory
+      tip: |
+        How much memory in Megabytes should be reserved for this Redis
+        instance
+      kind: number
+      required: true
+      default: '64'
+    - name: maxmemory
+      label: Maximum Memory
+      tip: |
+        How much memory in Megabytes this Redis instance can consume. If
+        it extrapolates this value the database will restart.
+      kind: number
+      required: true
+      default: '256'
+    - name: mincpu
+      label: Minimum CPU
+      tip: |
+        How much CPU time in milliCPUs should be reserved for this Redis
+        instance
+      kind: number
+      required: true
+      default: '50'
+    - name: maxcpu
+      label: Maximum CPU
+      tip: |
+        How much CPU time in milliCPUs this Redis instance can consume. If
+        it extrapolates this value the database process will experience CPU
+        throttling.
+      kind: number
+      required: true
+      default: '500'
+  output:
+    - name: host
+      source: ${svc.name}.${svc.namespace}.svc.cluster.local
+  resources:
+    - id: deploy
+      template:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            app.kubernetes.io/name: ${deploy.name}-deployment
+            app.kubernetes.io/instance: ${deploy.name}
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app.kubernetes.io/name: ${deploy.name}-deployment
+              app.kubernetes.io/instance: ${deploy.name}
+          template:
+            metadata:
+              labels:
+                app.kubernetes.io/name: ${deploy.name}-deployment
+                app.kubernetes.io/instance: ${deploy.name}
+            spec:
+              containers:
+                - image: redis:${input.version}-bookworm
+                  name: redis
+                  resources:
+                    requests:
+                      memory: ${input.minmemory}Mi
+                      cpu: ${input.mincpu}m
+                    limits:
+                      memory: ${input.maxmemory}Mi
+                      cpu: ${input.maxcpu}m
+                  ports:
+                    - containerPort: 6379
+                      name: redis
+                      protocol: TCP
+    - id: svc
+      template:
+        apiVersion: v1
+        kind: Service
+        spec:
+          ports:
+            - name: redis
+              port: 6379
+              protocol: TCP
+              targetPort: 6379
+          selector:
+            app.kubernetes.io/name: ${deploy.name}-deployment
+            app.kubernetes.io/instance: ${deploy.name}
 {{- end }}

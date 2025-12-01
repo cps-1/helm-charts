@@ -142,250 +142,187 @@ spec:
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: workspaces.cps1.tech
+  name: templateworkspaces.cps1.tech
 spec:
   group: cps1.tech
   names:
     categories: []
-    kind: Workspace
-    plural: workspaces
-    shortNames:
-    - cps1-ws
-    singular: workspace
+    kind: TemplateWorkspace
+    plural: templateworkspaces
+    shortNames: []
+    singular: templateworkspace
   scope: Namespaced
   versions:
   - additionalPrinterColumns: []
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Auto-generated derived type for WorkspaceSpec via `CustomResource`
+        description: Auto-generated derived type for TemplateWorkspaceSpec via `CustomResource`
         properties:
           spec:
             properties:
-              run:
-                type: boolean
-              template:
-                properties:
-                  components:
-                    default: []
-                    items:
-                      properties:
-                        container:
-                          nullable: true
-                          properties:
-                            env:
-                              additionalProperties:
-                                type: string
-                              default: {}
-                              type: object
-                            image:
-                              type: string
-                            ports:
-                              default: []
-                              items:
-                                properties:
-                                  exposure:
-                                    default: Internal
-                                    enum:
-                                    - Internal
-                                    - External
-                                    type: string
-                                  port:
-                                    format: int32
-                                    maximum: 65535.0
-                                    minimum: 1024.0
-                                    type: integer
-                                  protocol:
-                                    default: Tcp
-                                    enum:
-                                    - Http
-                                    - Https
-                                    - Ws
-                                    - Wss
-                                    - Tcp
-                                    - Udp
-                                    type: string
-                                required:
-                                - port
-                                type: object
-                              type: array
-                          required:
-                          - image
-                          type: object
-                        name:
-                          maxLength: 64
-                          minLength: 2
-                          type: string
-                        resource:
-                          nullable: true
-                          properties:
-                            name:
-                              type: string
-                            ports:
-                              default: []
-                              items:
-                                properties:
-                                  exposure:
-                                    default: Internal
-                                    enum:
-                                    - Internal
-                                    - External
-                                    type: string
-                                  port:
-                                    format: int32
-                                    maximum: 65535.0
-                                    minimum: 1024.0
-                                    type: integer
-                                  protocol:
-                                    default: Tcp
-                                    enum:
-                                    - Http
-                                    - Https
-                                    - Ws
-                                    - Wss
-                                    - Tcp
-                                    - Udp
-                                    type: string
-                                required:
-                                - port
-                                type: object
-                              type: array
-                            properties:
-                              additionalProperties:
-                                type: string
-                              default: {}
-                              type: object
-                            version:
-                              type: string
-                          required:
-                          - name
-                          - version
-                          type: object
-                        service:
-                          nullable: true
-                          properties:
-                            packages:
-                              default: []
-                              items:
-                                properties:
-                                  name:
-                                    type: string
-                                  properties:
-                                    additionalProperties: true
-                                    default: {}
-                                    type: object
-                                required:
-                                - name
-                                type: object
-                              type: array
-                            ports:
-                              default: []
-                              items:
-                                properties:
-                                  exposure:
-                                    default: Internal
-                                    enum:
-                                    - Internal
-                                    - External
-                                    type: string
-                                  port:
-                                    format: int32
-                                    maximum: 65535.0
-                                    minimum: 1024.0
-                                    type: integer
-                                  protocol:
-                                    default: Tcp
-                                    enum:
-                                    - Http
-                                    - Https
-                                    - Ws
-                                    - Wss
-                                    - Tcp
-                                    - Udp
-                                    type: string
-                                required:
-                                - port
-                                type: object
-                              maxItems: 32
-                              type: array
-                              x-kubernetes-validations:
-                              - message: a service component port must be unique
-                                rule: self.all(p1, self.exists_one(p2, p1==p2))
-                            source:
-                              nullable: true
-                              properties:
-                                repository:
-                                  maxLength: 2000
-                                  type: string
-                                  x-kubernetes-validations:
-                                  - message: repository url must be git or ssh
-                                    rule: self.matches('^(git|ssh|git@)([\\w\\.@\\:/\\-~]+)(\\.git)(/)?$')
-                              required:
-                              - repository
-                              type: object
-                          type: object
-                      required:
-                      - name
-                      type: object
-                    maxItems: 64
-                    type: array
-                    x-kubernetes-validations:
-                    - message: all services ports must be unique in the template
-                      rule: "\nself.all(\n    c1, self.all(\n        c2,\n        has(c1.service) && has(c2.service) && c1.name != c2.name ?\n        c1.service.ports.all(p1, !(p1 in c2.service.ports)) :\n        true\n    )\n)\n    "
-                  tasks:
-                    default: []
-                    items:
-                      properties:
-                        command:
-                          type: string
-                        component:
-                          type: string
-                        kind:
-                          enum:
-                          - Before
-                          - Main
-                          - After
-                          type: string
-                        name:
-                          nullable: true
-                          type: string
-                        workingDir:
-                          nullable: true
-                          type: string
-                      required:
-                      - command
-                      - component
-                      - kind
-                      type: object
-                    type: array
-                type: object
-              template_image:
+              baseImage:
                 type: string
+              env:
+                items:
+                  properties:
+                    name:
+                      type: string
+                    value:
+                      type: string
+                  required:
+                  - name
+                  - value
+                  type: object
+                type: array
+              id:
+                type: string
+              packages:
+                default: []
+                items:
+                  description: |-
+                    A snapshot from a Package, to use in a Workspace. Contains the Package
+                    original name, their spec and the input data to be used.
+                  properties:
+                    inputData:
+                      additionalProperties: true
+                      default: {}
+                      type: object
+                    name:
+                      type: string
+                    spec:
+                      properties:
+                        icon:
+                          properties:
+                            svg:
+                              description: |-
+                                The complete svg image with enclosing tags. E.g:
+                                ```
+                                <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <title>Title</title>
+                                    <path d="(...)"/>
+                                </svg>
+                                ```
+                              maxLength: 20000
+                              nullable: true
+                              type: string
+                            url:
+                              maxLength: 2000
+                              nullable: true
+                              type: string
+                          type: object
+                          x-kubernetes-validations:
+                          - message: an icon should either define a url or an svg
+                            rule: (has(self.url) && !has(self.svg)) || (!has(self.url) && has(self.svg))
+                        label:
+                          type: string
+                        properties:
+                          items:
+                            properties:
+                              default:
+                                description: |-
+                                  A default value for the property. Used to pre-populate forms in user
+                                  interfaces. If this propetry is required and received an empty value,
+                                  this value will be used if available; otherwise it'll err.
+                                nullable: true
+                                type: string
+                              kind:
+                                description: What is the value type of this property.
+                                enum:
+                                - string
+                                - text
+                                - secret
+                                - number
+                                - select
+                                - multi
+                                - tag
+                                type: string
+                              label:
+                                description: |-
+                                  A friendly name to describe this property. This will appear on user
+                                  interfaces.
+                                type: string
+                              name:
+                                description: |-
+                                  The property identifier. Must be unique across the collection of
+                                  properties from this resource.
+                                type: string
+                              required:
+                                description: If this property is required or if its optional.
+                                type: boolean
+                              tip:
+                                description: |-
+                                  Complementary text to help the user to fill the property value. This
+                                  will appear on the user interface.
+                                nullable: true
+                                type: string
+                              values:
+                                description: |-
+                                  A list of values available for the property. This is used if the kind
+                                  is select, multi, or tags.
+                                items:
+                                  type: string
+                                nullable: true
+                                type: array
+                            required:
+                            - kind
+                            - label
+                            - name
+                            - required
+                            type: object
+                          type: array
+                        setupScript:
+                          type: string
+                      required:
+                      - icon
+                      - label
+                      - properties
+                      - setupScript
+                      type: object
+                  required:
+                  - name
+                  - spec
+                  type: object
+                type: array
+              ports:
+                default: []
+                items:
+                  properties:
+                    exposure:
+                      default: Internal
+                      enum:
+                      - Internal
+                      - External
+                      type: string
+                    port:
+                      format: int32
+                      maximum: 65535.0
+                      minimum: 1024.0
+                      type: integer
+                    protocol:
+                      default: Tcp
+                      enum:
+                      - Http
+                      - Tcp
+                      - Udp
+                      type: string
+                  required:
+                  - port
+                  type: object
+                maxItems: 32
+                type: array
+              repositories:
+                items:
+                  type: string
+                maxItems: 2000
+                type: array
             required:
-            - run
-            - template
-            - template_image
+            - baseImage
+            - id
             type: object
           status:
             nullable: true
             properties:
-              components:
-                items:
-                  properties:
-                    component:
-                      type: string
-                    status:
-                      enum:
-                      - Pending
-                      - Ready
-                      - Failed
-                      - Paused
-                      type: string
-                  required:
-                  - component
-                  - status
-                  type: object
-                type: array
               conditions:
                 items:
                   properties:
@@ -415,26 +352,14 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
-              urls:
-                items:
-                  properties:
-                    component:
-                      type: string
-                    port:
-                      format: int32
-                      type: integer
-                    url:
-                      type: string
-                  required:
-                  - component
-                  - port
-                  - url
-                  type: object
-                type: array
+              latestImage:
+                type: string
+            required:
+            - latestImage
             type: object
         required:
         - spec
-        title: Workspace
+        title: TemplateWorkspace
         type: object
     served: true
     storage: true
@@ -444,104 +369,58 @@ spec:
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
-  name: resources.cps1.tech
+  name: resourcesets.cps1.tech
 spec:
   group: cps1.tech
   names:
     categories: []
-    kind: Resource
-    plural: resources
+    kind: ResourceSet
+    plural: resourcesets
     shortNames: []
-    singular: resource
+    singular: resourceset
   scope: Namespaced
   versions:
   - additionalPrinterColumns: []
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Auto-generated derived type for ResourceSpec via `CustomResource`
+        description: Auto-generated derived type for ResourceSetSpec via `CustomResource`
         properties:
           spec:
             properties:
-              defaultVersion:
-                nullable: true
-                type: string
-              defaults:
-                properties:
-                  env:
-                    items:
-                      properties:
-                        name:
-                          type: string
-                        value:
-                          type: string
-                      required:
-                      - name
-                      - value
-                      type: object
-                    type: array
-                  limits:
-                    properties:
-                      cpu:
-                        format: float
-                        type: number
-                      memory:
-                        description: Default memory limit in megabytes
-                        format: int32
-                        type: integer
-                    required:
-                    - cpu
-                    - memory
-                    type: object
-                  ports:
-                    items:
-                      properties:
-                        port:
-                          format: int32
-                          type: integer
-                        protocol:
-                          enum:
-                          - tcp
-                          - udp
-                          type: string
-                      required:
-                      - port
-                      - protocol
-                      type: object
-                    type: array
-                  volumes:
-                    items:
-                      properties:
-                        name:
-                          type: string
-                        path:
-                          type: string
-                      required:
-                      - name
-                      - path
-                      type: object
-                    type: array
-                required:
-                - env
-                - limits
-                - ports
-                - volumes
-                type: object
               description:
                 type: string
               icon:
-                type: string
-              label:
-                type: string
-              properties:
+                properties:
+                  svg:
+                    description: |-
+                      The complete svg image with enclosing tags. E.g:
+                      ```
+                      <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <title>Title</title>
+                          <path d="(...)"/>
+                      </svg>
+                      ```
+                    maxLength: 20000
+                    nullable: true
+                    type: string
+                  url:
+                    maxLength: 2000
+                    nullable: true
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: an icon should either define a url or an svg
+                  rule: (has(self.url) && !has(self.svg)) || (!has(self.url) && has(self.svg))
+              input:
                 items:
                   properties:
                     default:
-                      description: A default value for the property. Used to pre-populate forms in user interfaces. If this propetry is required and received an empty value, this value will be used if available; otherwise it'll err.
+                      description: |-
+                        A default value for the property. Used to pre-populate forms in user
+                        interfaces. If this propetry is required and received an empty value,
+                        this value will be used if available; otherwise it'll err.
                       nullable: true
-                      type: string
-                    env:
-                      description: Name of the environment variable that will receive this property value and pass it to the Resource container
                       type: string
                     kind:
                       description: What is the value type of this property.
@@ -555,58 +434,128 @@ spec:
                       - tag
                       type: string
                     label:
-                      description: A friendly name to describe this property. This will appear on user interfaces.
+                      description: |-
+                        A friendly name to describe this property. This will appear on user
+                        interfaces.
                       type: string
                     name:
-                      description: The property identifier. Must be unique across the collection of properties from this resource.
+                      description: |-
+                        The property identifier. Must be unique across the collection of
+                        properties from this resource.
                       type: string
                     required:
                       description: If this property is required or if its optional.
                       type: boolean
                     tip:
-                      description: Complementary text to help the user to fill the property value. This will appear on the user interface.
+                      description: |-
+                        Complementary text to help the user to fill the property value. This
+                        will appear on the user interface.
                       nullable: true
                       type: string
                     values:
-                      description: A list of values available for the property. This is used if the kind is select, multi, or tags.
+                      description: |-
+                        A list of values available for the property. This is used if the kind
+                        is select, multi, or tags.
                       items:
                         type: string
                       nullable: true
                       type: array
                   required:
-                  - env
                   - kind
                   - label
                   - name
                   - required
                   type: object
                 type: array
-              versions:
+              label:
+                type: string
+              output:
                 items:
                   properties:
-                    image:
-                      type: string
                     name:
+                      description: |-
+                        The property identifier. Must be unique across the collection of
+                        properties from this resource.
+                      type: string
+                    source:
+                      description: A CEL expression with the output source
                       type: string
                   required:
-                  - image
                   - name
+                  - source
+                  type: object
+                type: array
+              resources:
+                items:
+                  properties:
+                    id:
+                      type: string
+                    template:
+                      properties:
+                        apiVersion:
+                          type: string
+                        kind:
+                          type: string
+                        metadata:
+                          default:
+                            annotations: null
+                            finalizers: null
+                            generate_name: null
+                            labels: null
+                          description: |-
+                            `ObjectMeta` attributes that are writable, that is not read-only or populated
+                            by the server/system. This also does not include some attributes that CPS1
+                            itself will set to guarantee resource isolation and decommissioning, such
+                            as:
+                            - name
+                            - namespace
+                            - ownerReferences
+
+                            Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
+                          properties:
+                            annotations:
+                              additionalProperties:
+                                type: string
+                              nullable: true
+                              type: object
+                            finalizers:
+                              items:
+                                type: string
+                              nullable: true
+                              type: array
+                            generate_name:
+                              nullable: true
+                              type: string
+                            labels:
+                              additionalProperties:
+                                type: string
+                              nullable: true
+                              type: object
+                          type: object
+                      required:
+                      - apiVersion
+                      - kind
+                      type: object
+                      x-kubernetes-preserve-unknown-fields: true
+                  required:
+                  - id
+                  - template
                   type: object
                 type: array
             required:
-            - defaults
             - description
             - icon
+            - input
             - label
-            - properties
-            - versions
+            - output
+            - resources
             type: object
           status:
             nullable: true
             type: object
         required:
         - spec
-        title: Resource
+        title: ResourceSet
         type: object
     served: true
     storage: true
@@ -638,7 +587,14 @@ spec:
               icon:
                 properties:
                   svg:
-                    description: 'The complete svg image with enclosing tags. E.g: ``` <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"> <title>Title</title> <path d="(...)"/> </svg> ```'
+                    description: |-
+                      The complete svg image with enclosing tags. E.g:
+                      ```
+                      <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <title>Title</title>
+                          <path d="(...)"/>
+                      </svg>
+                      ```
                     maxLength: 20000
                     nullable: true
                     type: string
@@ -656,7 +612,10 @@ spec:
                 items:
                   properties:
                     default:
-                      description: A default value for the property. Used to pre-populate forms in user interfaces. If this propetry is required and received an empty value, this value will be used if available; otherwise it'll err.
+                      description: |-
+                        A default value for the property. Used to pre-populate forms in user
+                        interfaces. If this propetry is required and received an empty value,
+                        this value will be used if available; otherwise it'll err.
                       nullable: true
                       type: string
                     kind:
@@ -671,20 +630,28 @@ spec:
                       - tag
                       type: string
                     label:
-                      description: A friendly name to describe this property. This will appear on user interfaces.
+                      description: |-
+                        A friendly name to describe this property. This will appear on user
+                        interfaces.
                       type: string
                     name:
-                      description: The property identifier. Must be unique across the collection of properties from this resource.
+                      description: |-
+                        The property identifier. Must be unique across the collection of
+                        properties from this resource.
                       type: string
                     required:
                       description: If this property is required or if its optional.
                       type: boolean
                     tip:
-                      description: Complementary text to help the user to fill the property value. This will appear on the user interface.
+                      description: |-
+                        Complementary text to help the user to fill the property value. This
+                        will appear on the user interface.
                       nullable: true
                       type: string
                     values:
-                      description: A list of values available for the property. This is used if the kind is select, multi, or tags.
+                      description: |-
+                        A list of values available for the property. This is used if the kind
+                        is select, multi, or tags.
                       items:
                         type: string
                       nullable: true
@@ -731,7 +698,10 @@ spec:
                 items:
                   properties:
                     default:
-                      description: A default value for the property. Used to pre-populate forms in user interfaces. If this propetry is required and received an empty value, this value will be used if available; otherwise it'll err.
+                      description: |-
+                        A default value for the property. Used to pre-populate forms in user
+                        interfaces. If this propetry is required and received an empty value,
+                        this value will be used if available; otherwise it'll err.
                       nullable: true
                       type: string
                     kind:
@@ -746,20 +716,28 @@ spec:
                       - tag
                       type: string
                     label:
-                      description: A friendly name to describe this property. This will appear on user interfaces.
+                      description: |-
+                        A friendly name to describe this property. This will appear on user
+                        interfaces.
                       type: string
                     name:
-                      description: The property identifier. Must be unique across the collection of properties from this resource.
+                      description: |-
+                        The property identifier. Must be unique across the collection of
+                        properties from this resource.
                       type: string
                     required:
                       description: If this property is required or if its optional.
                       type: boolean
                     tip:
-                      description: Complementary text to help the user to fill the property value. This will appear on the user interface.
+                      description: |-
+                        Complementary text to help the user to fill the property value. This
+                        will appear on the user interface.
                       nullable: true
                       type: string
                     values:
-                      description: A list of values available for the property. This is used if the kind is select, multi, or tags.
+                      description: |-
+                        A list of values available for the property. This is used if the kind
+                        is select, multi, or tags.
                       items:
                         type: string
                       nullable: true
@@ -806,219 +784,144 @@ spec:
   scope: Namespaced
   versions:
   - additionalPrinterColumns: []
-    name: v1alpha1
+    name: v1alpha2
     schema:
       openAPIV3Schema:
         description: Auto-generated derived type for TemplateSpec via `CustomResource`
         properties:
           spec:
             properties:
-              baseImage:
-                type: string
               description:
                 nullable: true
                 type: string
               icon:
-                nullable: true
-                type: string
-              template:
                 properties:
-                  components:
-                    default: []
-                    items:
+                  svg:
+                    description: |-
+                      The complete svg image with enclosing tags. E.g:
+                      ```
+                      <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <title>Title</title>
+                          <path d="(...)"/>
+                      </svg>
+                      ```
+                    maxLength: 20000
+                    nullable: true
+                    type: string
+                  url:
+                    maxLength: 2000
+                    nullable: true
+                    type: string
+                type: object
+                x-kubernetes-validations:
+                - message: an icon should either define a url or an svg
+                  rule: (has(self.url) && !has(self.svg)) || (!has(self.url) && has(self.svg))
+              resources:
+                items:
+                  properties:
+                    id:
+                      type: string
+                    inputData:
+                      additionalProperties: true
+                      default: {}
+                      type: object
+                    resourceRef:
                       properties:
-                        container:
-                          nullable: true
-                          properties:
-                            env:
-                              additionalProperties:
-                                type: string
-                              default: {}
-                              type: object
-                            image:
-                              type: string
-                            ports:
-                              default: []
-                              items:
-                                properties:
-                                  exposure:
-                                    default: Internal
-                                    enum:
-                                    - Internal
-                                    - External
-                                    type: string
-                                  port:
-                                    format: int32
-                                    maximum: 65535.0
-                                    minimum: 1024.0
-                                    type: integer
-                                  protocol:
-                                    default: Tcp
-                                    enum:
-                                    - Http
-                                    - Https
-                                    - Ws
-                                    - Wss
-                                    - Tcp
-                                    - Udp
-                                    type: string
-                                required:
-                                - port
-                                type: object
-                              type: array
-                          required:
-                          - image
-                          type: object
                         name:
-                          maxLength: 64
-                          minLength: 2
                           type: string
-                        resource:
-                          nullable: true
-                          properties:
-                            name:
-                              type: string
-                            ports:
-                              default: []
-                              items:
-                                properties:
-                                  exposure:
-                                    default: Internal
-                                    enum:
-                                    - Internal
-                                    - External
-                                    type: string
-                                  port:
-                                    format: int32
-                                    maximum: 65535.0
-                                    minimum: 1024.0
-                                    type: integer
-                                  protocol:
-                                    default: Tcp
-                                    enum:
-                                    - Http
-                                    - Https
-                                    - Ws
-                                    - Wss
-                                    - Tcp
-                                    - Udp
-                                    type: string
-                                required:
-                                - port
-                                type: object
-                              type: array
-                            properties:
-                              additionalProperties:
-                                type: string
-                              default: {}
-                              type: object
-                            version:
-                              type: string
-                          required:
-                          - name
-                          - version
-                          type: object
-                        service:
-                          nullable: true
-                          properties:
-                            packages:
-                              default: []
-                              items:
-                                properties:
-                                  name:
-                                    type: string
-                                  properties:
-                                    additionalProperties: true
-                                    default: {}
-                                    type: object
-                                required:
-                                - name
-                                type: object
-                              type: array
-                            ports:
-                              default: []
-                              items:
-                                properties:
-                                  exposure:
-                                    default: Internal
-                                    enum:
-                                    - Internal
-                                    - External
-                                    type: string
-                                  port:
-                                    format: int32
-                                    maximum: 65535.0
-                                    minimum: 1024.0
-                                    type: integer
-                                  protocol:
-                                    default: Tcp
-                                    enum:
-                                    - Http
-                                    - Https
-                                    - Ws
-                                    - Wss
-                                    - Tcp
-                                    - Udp
-                                    type: string
-                                required:
-                                - port
-                                type: object
-                              maxItems: 32
-                              type: array
-                              x-kubernetes-validations:
-                              - message: a service component port must be unique
-                                rule: self.all(p1, self.exists_one(p2, p1==p2))
-                            source:
-                              nullable: true
-                              properties:
-                                repository:
-                                  maxLength: 2000
-                                  type: string
-                                  x-kubernetes-validations:
-                                  - message: repository url must be git or ssh
-                                    rule: self.matches('^(git|ssh|git@)([\\w\\.@\\:/\\-~]+)(\\.git)(/)?$')
-                              required:
-                              - repository
-                              type: object
-                          type: object
+                        namespace:
+                          type: string
                       required:
                       - name
+                      - namespace
                       type: object
-                    maxItems: 64
-                    type: array
-                    x-kubernetes-validations:
-                    - message: all services ports must be unique in the template
-                      rule: "\nself.all(\n    c1, self.all(\n        c2,\n        has(c1.service) && has(c2.service) && c1.name != c2.name ?\n        c1.service.ports.all(p1, !(p1 in c2.service.ports)) :\n        true\n    )\n)\n    "
-                  tasks:
-                    default: []
-                    items:
-                      properties:
-                        command:
-                          type: string
-                        component:
-                          type: string
-                        kind:
-                          enum:
-                          - Before
-                          - Main
-                          - After
-                          type: string
-                        name:
-                          nullable: true
-                          type: string
-                        workingDir:
-                          nullable: true
-                          type: string
-                      required:
-                      - command
-                      - component
-                      - kind
-                      type: object
-                    type: array
-                type: object
+                  required:
+                  - id
+                  - resourceRef
+                  type: object
+                type: array
+              workspaces:
+                items:
+                  properties:
+                    baseImage:
+                      type: string
+                    env:
+                      items:
+                        properties:
+                          name:
+                            type: string
+                          value:
+                            type: string
+                        required:
+                        - name
+                        - value
+                        type: object
+                      type: array
+                    id:
+                      type: string
+                    packages:
+                      items:
+                        properties:
+                          inputData:
+                            additionalProperties: true
+                            default: {}
+                            type: object
+                          packageRef:
+                            properties:
+                              name:
+                                type: string
+                              namespace:
+                                type: string
+                            required:
+                            - name
+                            - namespace
+                            type: object
+                        required:
+                        - packageRef
+                        type: object
+                      type: array
+                    ports:
+                      items:
+                        properties:
+                          exposure:
+                            default: Internal
+                            enum:
+                            - Internal
+                            - External
+                            type: string
+                          port:
+                            format: int32
+                            maximum: 65535.0
+                            minimum: 1024.0
+                            type: integer
+                          protocol:
+                            default: Tcp
+                            enum:
+                            - Http
+                            - Tcp
+                            - Udp
+                            type: string
+                        required:
+                        - port
+                        type: object
+                      type: array
+                    repositories:
+                      items:
+                        type: string
+                      type: array
+                  required:
+                  - baseImage
+                  - env
+                  - id
+                  - packages
+                  - ports
+                  - repositories
+                  type: object
+                type: array
             required:
-            - baseImage
-            - template
+            - icon
+            - resources
+            - workspaces
             type: object
           status:
             nullable: true
@@ -1052,14 +955,446 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
-              latestImage:
-                type: string
+              lastVersion:
+                format: uint32
+                minimum: 0.0
+                type: integer
             required:
-            - latestImage
+            - lastVersion
             type: object
         required:
         - spec
         title: Template
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: templatesnapshots.cps1.tech
+spec:
+  group: cps1.tech
+  names:
+    categories: []
+    kind: TemplateSnapshot
+    plural: templatesnapshots
+    shortNames: []
+    singular: templatesnapshot
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns: []
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Auto-generated derived type for TemplateSnapshotSpec via `CustomResource`
+        properties:
+          spec:
+            properties:
+              resources:
+                items:
+                  properties:
+                    id:
+                      type: string
+                    inputData:
+                      additionalProperties: true
+                      default: {}
+                      type: object
+                    resourceName:
+                      type: string
+                    spec:
+                      properties:
+                        description:
+                          type: string
+                        icon:
+                          properties:
+                            svg:
+                              description: |-
+                                The complete svg image with enclosing tags. E.g:
+                                ```
+                                <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <title>Title</title>
+                                    <path d="(...)"/>
+                                </svg>
+                                ```
+                              maxLength: 20000
+                              nullable: true
+                              type: string
+                            url:
+                              maxLength: 2000
+                              nullable: true
+                              type: string
+                          type: object
+                          x-kubernetes-validations:
+                          - message: an icon should either define a url or an svg
+                            rule: (has(self.url) && !has(self.svg)) || (!has(self.url) && has(self.svg))
+                        input:
+                          items:
+                            properties:
+                              default:
+                                description: |-
+                                  A default value for the property. Used to pre-populate forms in user
+                                  interfaces. If this propetry is required and received an empty value,
+                                  this value will be used if available; otherwise it'll err.
+                                nullable: true
+                                type: string
+                              kind:
+                                description: What is the value type of this property.
+                                enum:
+                                - string
+                                - text
+                                - secret
+                                - number
+                                - select
+                                - multi
+                                - tag
+                                type: string
+                              label:
+                                description: |-
+                                  A friendly name to describe this property. This will appear on user
+                                  interfaces.
+                                type: string
+                              name:
+                                description: |-
+                                  The property identifier. Must be unique across the collection of
+                                  properties from this resource.
+                                type: string
+                              required:
+                                description: If this property is required or if its optional.
+                                type: boolean
+                              tip:
+                                description: |-
+                                  Complementary text to help the user to fill the property value. This
+                                  will appear on the user interface.
+                                nullable: true
+                                type: string
+                              values:
+                                description: |-
+                                  A list of values available for the property. This is used if the kind
+                                  is select, multi, or tags.
+                                items:
+                                  type: string
+                                nullable: true
+                                type: array
+                            required:
+                            - kind
+                            - label
+                            - name
+                            - required
+                            type: object
+                          type: array
+                        label:
+                          type: string
+                        output:
+                          items:
+                            properties:
+                              name:
+                                description: |-
+                                  The property identifier. Must be unique across the collection of
+                                  properties from this resource.
+                                type: string
+                              source:
+                                description: A CEL expression with the output source
+                                type: string
+                            required:
+                            - name
+                            - source
+                            type: object
+                          type: array
+                        resources:
+                          items:
+                            properties:
+                              id:
+                                type: string
+                              template:
+                                properties:
+                                  apiVersion:
+                                    type: string
+                                  kind:
+                                    type: string
+                                  metadata:
+                                    default:
+                                      annotations: null
+                                      finalizers: null
+                                      generate_name: null
+                                      labels: null
+                                    description: |-
+                                      `ObjectMeta` attributes that are writable, that is not read-only or populated
+                                      by the server/system. This also does not include some attributes that CPS1
+                                      itself will set to guarantee resource isolation and decommissioning, such
+                                      as:
+                                      - name
+                                      - namespace
+                                      - ownerReferences
+
+                                      Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
+                                    properties:
+                                      annotations:
+                                        additionalProperties:
+                                          type: string
+                                        nullable: true
+                                        type: object
+                                      finalizers:
+                                        items:
+                                          type: string
+                                        nullable: true
+                                        type: array
+                                      generate_name:
+                                        nullable: true
+                                        type: string
+                                      labels:
+                                        additionalProperties:
+                                          type: string
+                                        nullable: true
+                                        type: object
+                                    type: object
+                                required:
+                                - apiVersion
+                                - kind
+                                type: object
+                                x-kubernetes-preserve-unknown-fields: true
+                            required:
+                            - id
+                            - template
+                            type: object
+                          type: array
+                      required:
+                      - description
+                      - icon
+                      - input
+                      - label
+                      - output
+                      - resources
+                      type: object
+                  required:
+                  - id
+                  - resourceName
+                  - spec
+                  type: object
+                type: array
+              version:
+                format: uint32
+                minimum: 0.0
+                type: integer
+              workspaces:
+                items:
+                  properties:
+                    baseImage:
+                      type: string
+                    env:
+                      items:
+                        properties:
+                          name:
+                            type: string
+                          value:
+                            type: string
+                        required:
+                        - name
+                        - value
+                        type: object
+                      type: array
+                    id:
+                      type: string
+                    packages:
+                      default: []
+                      items:
+                        description: |-
+                          A snapshot from a Package, to use in a Workspace. Contains the Package
+                          original name, their spec and the input data to be used.
+                        properties:
+                          inputData:
+                            additionalProperties: true
+                            default: {}
+                            type: object
+                          name:
+                            type: string
+                          spec:
+                            properties:
+                              icon:
+                                properties:
+                                  svg:
+                                    description: |-
+                                      The complete svg image with enclosing tags. E.g:
+                                      ```
+                                      <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                          <title>Title</title>
+                                          <path d="(...)"/>
+                                      </svg>
+                                      ```
+                                    maxLength: 20000
+                                    nullable: true
+                                    type: string
+                                  url:
+                                    maxLength: 2000
+                                    nullable: true
+                                    type: string
+                                type: object
+                                x-kubernetes-validations:
+                                - message: an icon should either define a url or an svg
+                                  rule: (has(self.url) && !has(self.svg)) || (!has(self.url) && has(self.svg))
+                              label:
+                                type: string
+                              properties:
+                                items:
+                                  properties:
+                                    default:
+                                      description: |-
+                                        A default value for the property. Used to pre-populate forms in user
+                                        interfaces. If this propetry is required and received an empty value,
+                                        this value will be used if available; otherwise it'll err.
+                                      nullable: true
+                                      type: string
+                                    kind:
+                                      description: What is the value type of this property.
+                                      enum:
+                                      - string
+                                      - text
+                                      - secret
+                                      - number
+                                      - select
+                                      - multi
+                                      - tag
+                                      type: string
+                                    label:
+                                      description: |-
+                                        A friendly name to describe this property. This will appear on user
+                                        interfaces.
+                                      type: string
+                                    name:
+                                      description: |-
+                                        The property identifier. Must be unique across the collection of
+                                        properties from this resource.
+                                      type: string
+                                    required:
+                                      description: If this property is required or if its optional.
+                                      type: boolean
+                                    tip:
+                                      description: |-
+                                        Complementary text to help the user to fill the property value. This
+                                        will appear on the user interface.
+                                      nullable: true
+                                      type: string
+                                    values:
+                                      description: |-
+                                        A list of values available for the property. This is used if the kind
+                                        is select, multi, or tags.
+                                      items:
+                                        type: string
+                                      nullable: true
+                                      type: array
+                                  required:
+                                  - kind
+                                  - label
+                                  - name
+                                  - required
+                                  type: object
+                                type: array
+                              setupScript:
+                                type: string
+                            required:
+                            - icon
+                            - label
+                            - properties
+                            - setupScript
+                            type: object
+                        required:
+                        - name
+                        - spec
+                        type: object
+                      type: array
+                    ports:
+                      default: []
+                      items:
+                        properties:
+                          exposure:
+                            default: Internal
+                            enum:
+                            - Internal
+                            - External
+                            type: string
+                          port:
+                            format: int32
+                            maximum: 65535.0
+                            minimum: 1024.0
+                            type: integer
+                          protocol:
+                            default: Tcp
+                            enum:
+                            - Http
+                            - Tcp
+                            - Udp
+                            type: string
+                        required:
+                        - port
+                        type: object
+                      maxItems: 32
+                      type: array
+                    repositories:
+                      items:
+                        type: string
+                      maxItems: 2000
+                      type: array
+                  required:
+                  - baseImage
+                  - id
+                  type: object
+                type: array
+            required:
+            - resources
+            - version
+            - workspaces
+            type: object
+          status:
+            nullable: true
+            properties:
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    observedGeneration:
+                      default: 0
+                      format: int64
+                      type: integer
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              failed:
+                format: uint16
+                maximum: 65535.0
+                minimum: 0.0
+                type: integer
+              succeeded:
+                format: uint16
+                maximum: 65535.0
+                minimum: 0.0
+                type: integer
+            required:
+            - failed
+            - succeeded
+            type: object
+        required:
+        - spec
+        title: TemplateSnapshot
         type: object
     served: true
     storage: true
@@ -1088,6 +1423,9 @@ spec:
         properties:
           spec:
             properties:
+              buildahImage:
+                default: quay.io/containers/buildah:v1.40.1-immutable
+                type: string
               defaultResourceTimeout:
                 default: 300
                 format: int32
@@ -1156,6 +1494,14 @@ spec:
               userNamespacePrefix:
                 default: u-
                 type: string
+              userNamespaceServiceAccountAnnotations:
+                additionalProperties:
+                  type: string
+                description: |-
+                  Which annotations should be applied to the user namespace service
+                  account.
+                nullable: true
+                type: object
             required:
             - gateway
             - hostname
@@ -1173,6 +1519,592 @@ spec:
         required:
         - spec
         title: Config
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: environments.cps1.tech
+spec:
+  group: cps1.tech
+  names:
+    categories: []
+    kind: Environment
+    plural: environments
+    shortNames: []
+    singular: environment
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns: []
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Auto-generated derived type for EnvironmentSpec via `CustomResource`
+        properties:
+          spec:
+            properties:
+              run:
+                type: boolean
+              templateRef:
+                properties:
+                  name:
+                    type: string
+                  namespace:
+                    type: string
+                required:
+                - name
+                - namespace
+                type: object
+            required:
+            - run
+            - templateRef
+            type: object
+          status:
+            nullable: true
+            type: object
+        required:
+        - spec
+        title: Environment
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: environmentworkspaces.cps1.tech
+spec:
+  group: cps1.tech
+  names:
+    categories: []
+    kind: EnvironmentWorkspace
+    plural: environmentworkspaces
+    shortNames: []
+    singular: environmentworkspace
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns: []
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Auto-generated derived type for EnvironmentWorkspaceSpec via `CustomResource`
+        properties:
+          spec:
+            properties:
+              env:
+                items:
+                  properties:
+                    name:
+                      type: string
+                    value:
+                      type: string
+                  required:
+                  - name
+                  - value
+                  type: object
+                type: array
+              id:
+                type: string
+              image:
+                type: string
+              ports:
+                items:
+                  properties:
+                    exposure:
+                      default: Internal
+                      enum:
+                      - Internal
+                      - External
+                      type: string
+                    port:
+                      format: int32
+                      maximum: 65535.0
+                      minimum: 1024.0
+                      type: integer
+                    protocol:
+                      default: Tcp
+                      enum:
+                      - Http
+                      - Tcp
+                      - Udp
+                      type: string
+                  required:
+                  - port
+                  type: object
+                type: array
+              repositories:
+                items:
+                  type: string
+                type: array
+              run:
+                type: boolean
+            required:
+            - env
+            - id
+            - image
+            - ports
+            - repositories
+            - run
+            type: object
+          status:
+            nullable: true
+            properties:
+              conditions:
+                items:
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    observedGeneration:
+                      default: 0
+                      format: int64
+                      type: integer
+                    reason:
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      type: string
+                  required:
+                  - lastTransitionTime
+                  - message
+                  - reason
+                  - status
+                  - type
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - type
+                x-kubernetes-list-type: map
+              phase:
+                enum:
+                - Pending
+                - Ready
+                - Failed
+                - Paused
+                type: string
+            required:
+            - phase
+            type: object
+        required:
+        - spec
+        title: EnvironmentWorkspace
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: environmentsnapshots.cps1.tech
+spec:
+  group: cps1.tech
+  names:
+    categories: []
+    kind: EnvironmentSnapshot
+    plural: environmentsnapshots
+    shortNames: []
+    singular: environmentsnapshot
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns: []
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: Auto-generated derived type for EnvironmentSnapshotSpec via `CustomResource`
+        properties:
+          spec:
+            properties:
+              run:
+                type: boolean
+              templateSnapshot:
+                properties:
+                  resources:
+                    items:
+                      properties:
+                        id:
+                          type: string
+                        inputData:
+                          additionalProperties: true
+                          default: {}
+                          type: object
+                        resourceName:
+                          type: string
+                        spec:
+                          properties:
+                            description:
+                              type: string
+                            icon:
+                              properties:
+                                svg:
+                                  description: |-
+                                    The complete svg image with enclosing tags. E.g:
+                                    ```
+                                    <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <title>Title</title>
+                                        <path d="(...)"/>
+                                    </svg>
+                                    ```
+                                  maxLength: 20000
+                                  nullable: true
+                                  type: string
+                                url:
+                                  maxLength: 2000
+                                  nullable: true
+                                  type: string
+                              type: object
+                              x-kubernetes-validations:
+                              - message: an icon should either define a url or an svg
+                                rule: (has(self.url) && !has(self.svg)) || (!has(self.url) && has(self.svg))
+                            input:
+                              items:
+                                properties:
+                                  default:
+                                    description: |-
+                                      A default value for the property. Used to pre-populate forms in user
+                                      interfaces. If this propetry is required and received an empty value,
+                                      this value will be used if available; otherwise it'll err.
+                                    nullable: true
+                                    type: string
+                                  kind:
+                                    description: What is the value type of this property.
+                                    enum:
+                                    - string
+                                    - text
+                                    - secret
+                                    - number
+                                    - select
+                                    - multi
+                                    - tag
+                                    type: string
+                                  label:
+                                    description: |-
+                                      A friendly name to describe this property. This will appear on user
+                                      interfaces.
+                                    type: string
+                                  name:
+                                    description: |-
+                                      The property identifier. Must be unique across the collection of
+                                      properties from this resource.
+                                    type: string
+                                  required:
+                                    description: If this property is required or if its optional.
+                                    type: boolean
+                                  tip:
+                                    description: |-
+                                      Complementary text to help the user to fill the property value. This
+                                      will appear on the user interface.
+                                    nullable: true
+                                    type: string
+                                  values:
+                                    description: |-
+                                      A list of values available for the property. This is used if the kind
+                                      is select, multi, or tags.
+                                    items:
+                                      type: string
+                                    nullable: true
+                                    type: array
+                                required:
+                                - kind
+                                - label
+                                - name
+                                - required
+                                type: object
+                              type: array
+                            label:
+                              type: string
+                            output:
+                              items:
+                                properties:
+                                  name:
+                                    description: |-
+                                      The property identifier. Must be unique across the collection of
+                                      properties from this resource.
+                                    type: string
+                                  source:
+                                    description: A CEL expression with the output source
+                                    type: string
+                                required:
+                                - name
+                                - source
+                                type: object
+                              type: array
+                            resources:
+                              items:
+                                properties:
+                                  id:
+                                    type: string
+                                  template:
+                                    properties:
+                                      apiVersion:
+                                        type: string
+                                      kind:
+                                        type: string
+                                      metadata:
+                                        default:
+                                          annotations: null
+                                          finalizers: null
+                                          generate_name: null
+                                          labels: null
+                                        description: |-
+                                          `ObjectMeta` attributes that are writable, that is not read-only or populated
+                                          by the server/system. This also does not include some attributes that CPS1
+                                          itself will set to guarantee resource isolation and decommissioning, such
+                                          as:
+                                          - name
+                                          - namespace
+                                          - ownerReferences
+
+                                          Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
+                                        properties:
+                                          annotations:
+                                            additionalProperties:
+                                              type: string
+                                            nullable: true
+                                            type: object
+                                          finalizers:
+                                            items:
+                                              type: string
+                                            nullable: true
+                                            type: array
+                                          generate_name:
+                                            nullable: true
+                                            type: string
+                                          labels:
+                                            additionalProperties:
+                                              type: string
+                                            nullable: true
+                                            type: object
+                                        type: object
+                                    required:
+                                    - apiVersion
+                                    - kind
+                                    type: object
+                                    x-kubernetes-preserve-unknown-fields: true
+                                required:
+                                - id
+                                - template
+                                type: object
+                              type: array
+                          required:
+                          - description
+                          - icon
+                          - input
+                          - label
+                          - output
+                          - resources
+                          type: object
+                      required:
+                      - id
+                      - resourceName
+                      - spec
+                      type: object
+                    type: array
+                  version:
+                    format: uint32
+                    minimum: 0.0
+                    type: integer
+                  workspaces:
+                    items:
+                      properties:
+                        baseImage:
+                          type: string
+                        env:
+                          items:
+                            properties:
+                              name:
+                                type: string
+                              value:
+                                type: string
+                            required:
+                            - name
+                            - value
+                            type: object
+                          type: array
+                        id:
+                          type: string
+                        packages:
+                          default: []
+                          items:
+                            description: |-
+                              A snapshot from a Package, to use in a Workspace. Contains the Package
+                              original name, their spec and the input data to be used.
+                            properties:
+                              inputData:
+                                additionalProperties: true
+                                default: {}
+                                type: object
+                              name:
+                                type: string
+                              spec:
+                                properties:
+                                  icon:
+                                    properties:
+                                      svg:
+                                        description: |-
+                                          The complete svg image with enclosing tags. E.g:
+                                          ```
+                                          <svg role="img" fill="#FFFFFF" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                              <title>Title</title>
+                                              <path d="(...)"/>
+                                          </svg>
+                                          ```
+                                        maxLength: 20000
+                                        nullable: true
+                                        type: string
+                                      url:
+                                        maxLength: 2000
+                                        nullable: true
+                                        type: string
+                                    type: object
+                                    x-kubernetes-validations:
+                                    - message: an icon should either define a url or an svg
+                                      rule: (has(self.url) && !has(self.svg)) || (!has(self.url) && has(self.svg))
+                                  label:
+                                    type: string
+                                  properties:
+                                    items:
+                                      properties:
+                                        default:
+                                          description: |-
+                                            A default value for the property. Used to pre-populate forms in user
+                                            interfaces. If this propetry is required and received an empty value,
+                                            this value will be used if available; otherwise it'll err.
+                                          nullable: true
+                                          type: string
+                                        kind:
+                                          description: What is the value type of this property.
+                                          enum:
+                                          - string
+                                          - text
+                                          - secret
+                                          - number
+                                          - select
+                                          - multi
+                                          - tag
+                                          type: string
+                                        label:
+                                          description: |-
+                                            A friendly name to describe this property. This will appear on user
+                                            interfaces.
+                                          type: string
+                                        name:
+                                          description: |-
+                                            The property identifier. Must be unique across the collection of
+                                            properties from this resource.
+                                          type: string
+                                        required:
+                                          description: If this property is required or if its optional.
+                                          type: boolean
+                                        tip:
+                                          description: |-
+                                            Complementary text to help the user to fill the property value. This
+                                            will appear on the user interface.
+                                          nullable: true
+                                          type: string
+                                        values:
+                                          description: |-
+                                            A list of values available for the property. This is used if the kind
+                                            is select, multi, or tags.
+                                          items:
+                                            type: string
+                                          nullable: true
+                                          type: array
+                                      required:
+                                      - kind
+                                      - label
+                                      - name
+                                      - required
+                                      type: object
+                                    type: array
+                                  setupScript:
+                                    type: string
+                                required:
+                                - icon
+                                - label
+                                - properties
+                                - setupScript
+                                type: object
+                            required:
+                            - name
+                            - spec
+                            type: object
+                          type: array
+                        ports:
+                          default: []
+                          items:
+                            properties:
+                              exposure:
+                                default: Internal
+                                enum:
+                                - Internal
+                                - External
+                                type: string
+                              port:
+                                format: int32
+                                maximum: 65535.0
+                                minimum: 1024.0
+                                type: integer
+                              protocol:
+                                default: Tcp
+                                enum:
+                                - Http
+                                - Tcp
+                                - Udp
+                                type: string
+                            required:
+                            - port
+                            type: object
+                          maxItems: 32
+                          type: array
+                        repositories:
+                          items:
+                            type: string
+                          maxItems: 2000
+                          type: array
+                      required:
+                      - baseImage
+                      - id
+                      type: object
+                    type: array
+                required:
+                - resources
+                - version
+                - workspaces
+                type: object
+              workspacesImages:
+                items:
+                  properties:
+                    image:
+                      type: string
+                    workspaceId:
+                      type: string
+                  required:
+                  - image
+                  - workspaceId
+                  type: object
+                type: array
+            required:
+            - run
+            - templateSnapshot
+            - workspacesImages
+            type: object
+          status:
+            nullable: true
+            type: object
+        required:
+        - spec
+        title: EnvironmentSnapshot
         type: object
     served: true
     storage: true
