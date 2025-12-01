@@ -26,9 +26,24 @@ config:
     clientId: <clientId>
     orgName: <orgName>
     secret: <secret>
+  # Annotations to include in the user namespaces service accounts
+  # Example:
+  # userNamespaceServiceAccountAnnotations:
+  #   eks.amazonaws.com/role-arn: 'arn:aws:iam::1234567890:role/cps1-workspace'
+  userNamespaceServiceAccountAnnotations: {}
   # license key - uncomment and set if needed
   # license:
 
 gateway:
   service:
     annotations: {}
+
+# Permissions to manage extra resources
+# Example:
+#
+# permissions:
+#   rules:
+#     - apiGroups: ["crd.group.name"]
+#       resources: ["crd", "crd/status"]
+permissions:
+  rules: []
