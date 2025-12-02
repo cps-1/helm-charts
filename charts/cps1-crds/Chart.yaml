@@ -3,5 +3,5 @@ name: cps1-crds
 description: CPS1 Custom Resource Definitions
 type: application
 kubeVersion: ">= 1.30.0-0"
-version: 0.3.0
-appVersion: "0.3.0"
+version: 0.3.1
+appVersion: "0.3.1"
