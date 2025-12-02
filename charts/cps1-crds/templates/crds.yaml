@@ -176,7 +176,11 @@ spec:
                   type: object
                 type: array
               id:
+                maxLength: 32
                 type: string
+                x-kubernetes-validations:
+                - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+                  rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
               packages:
                 default: []
                 items:
@@ -820,7 +824,11 @@ spec:
                 items:
                   properties:
                     id:
+                      maxLength: 32
                       type: string
+                      x-kubernetes-validations:
+                      - message: a ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+                        rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
                     inputData:
                       additionalProperties: true
                       default: {}
@@ -839,6 +847,7 @@ spec:
                   - id
                   - resourceRef
                   type: object
+                maxItems: 32
                 type: array
               workspaces:
                 items:
@@ -858,7 +867,11 @@ spec:
                         type: object
                       type: array
                     id:
+                      maxLength: 32
                       type: string
+                      x-kubernetes-validations:
+                      - message: a ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+                        rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
                     packages:
                       items:
                         properties:
@@ -917,6 +930,7 @@ spec:
                   - ports
                   - repositories
                   type: object
+                maxItems: 32
                 type: array
             required:
             - icon
@@ -997,7 +1011,11 @@ spec:
                 items:
                   properties:
                     id:
+                      maxLength: 32
                       type: string
+                      x-kubernetes-validations:
+                      - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+                        rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
                     inputData:
                       additionalProperties: true
                       default: {}
@@ -1173,6 +1191,7 @@ spec:
                   - resourceName
                   - spec
                   type: object
+                maxItems: 32
                 type: array
               version:
                 format: uint32
@@ -1196,7 +1215,11 @@ spec:
                         type: object
                       type: array
                     id:
+                      maxLength: 32
                       type: string
+                      x-kubernetes-validations:
+                      - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+                        rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
                     packages:
                       default: []
                       items:
@@ -1340,6 +1363,7 @@ spec:
                   - baseImage
                   - id
                   type: object
+                maxItems: 32
                 type: array
             required:
             - resources
@@ -1733,7 +1757,11 @@ spec:
                     items:
                       properties:
                         id:
+                          maxLength: 32
                           type: string
+                          x-kubernetes-validations:
+                          - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+                            rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
                         inputData:
                           additionalProperties: true
                           default: {}
@@ -1909,6 +1937,7 @@ spec:
                       - resourceName
                       - spec
                       type: object
+                    maxItems: 32
                     type: array
                   version:
                     format: uint32
@@ -1932,7 +1961,11 @@ spec:
                             type: object
                           type: array
                         id:
+                          maxLength: 32
                           type: string
+                          x-kubernetes-validations:
+                          - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+                            rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
                         packages:
                           default: []
                           items:
@@ -2076,6 +2109,7 @@ spec:
                       - baseImage
                       - id
                       type: object
+                    maxItems: 32
                     type: array
                 required:
                 - resources
