@@ -1,0 +1,151 @@
+apiVersion: cps1.tech/v1alpha1
+kind: ResourceSet
+metadata:
+  name: opensearch
+spec:
+  description: OpenSearch is an open source, enterprise-grade search and observability suite that brings order to unstructured data at scale.
+  icon:
+    svg: |
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M61.7374 23.5C60.4878 23.5 59.4748 24.513 59.4748 25.7626C59.4748 44.3813 44.3813 59.4748 25.7626 59.4748C24.513 59.4748 23.5 60.4878 23.5 61.7374C23.5 62.987 24.513 64 25.7626 64C46.8805 64 64 46.8805 64 25.7626C64 24.513 62.987 23.5 61.7374 23.5Z" fill="#005EB8"/>
+      <path d="M48.0814 38C50.2572 34.4505 52.3615 29.7178 51.9475 23.0921C51.0899 9.36725 38.6589 -1.04463 26.9206 0.0837327C22.3253 0.525465 17.6068 4.2712 18.026 10.9805C18.2082 13.8961 19.6352 15.6169 21.9544 16.9399C24.1618 18.1992 26.9978 18.9969 30.2128 19.9011C34.0962 20.9934 38.6009 22.2203 42.063 24.7717C46.2125 27.8295 49.0491 31.3743 48.0814 38Z" fill="#003B5C"/>
+      <path d="M3.91861 14C1.74276 17.5495 -0.361506 22.2822 0.0524931 28.9079C0.910072 42.6327 13.3411 53.0446 25.0794 51.9163C29.6747 51.4745 34.3932 47.7288 33.974 41.0195C33.7918 38.1039 32.3647 36.3831 30.0456 35.0601C27.8382 33.8008 25.0022 33.0031 21.7872 32.0989C17.9038 31.0066 13.3991 29.7797 9.93694 27.2283C5.78746 24.1704 2.95092 20.6257 3.91861 14Z" fill="#005EB8"/>
+      </svg>
+  input:
+  - default: admin
+    kind: string
+    label: Admin password
+    name: admin_password
+    required: true
+    tip: Custom password for the admin user.
+  - default: "3"
+    kind: select
+    label: Version
+    name: version
+    required: true
+    values:
+    - "3"
+    - "2"
+  - default: "1024"
+    kind: number
+    label: Minimum Memory
+    name: minmemory
+    required: true
+    tip: |
+      How much memory in Megabytes should be reserved for this OpenSearch
+      instance
+  - default: "2048"
+    kind: number
+    label: Maximum Memory
+    name: maxmemory
+    required: true
+    tip: |
+      How much memory in Megabytes this OpenSearch instance can consume. If
+      it extrapolates this value the database will restart.
+  - default: "200"
+    kind: number
+    label: Minimum CPU
+    name: mincpu
+    required: true
+    tip: |
+      How much CPU time in milliCPUs should be reserved for this PostgreSQL
+      instance
+  - default: "1000"
+    kind: number
+    label: Maximum CPU
+    name: maxcpu
+    required: true
+    tip: |
+      How much CPU time in milliCPUs this PostgreSQL instance can consume. If
+      it extrapolates this value the database process will experience CPU
+      throttling.
+  - default: "5"
+    kind: number
+    label: Storage
+    name: storage
+    required: true
+    tip: |
+      How much storage in Gigabytes this PostgreSQL will have available.
+  label: OpenSearch
+  output:
+  - name: admin_password
+    source: ${input.admin_password}
+  - name: host
+    source: ${svc.name}.${svc.namespace}.svc.cluster.local
+  resources:
+  - id: sts
+    template:
+      apiVersion: apps/v1
+      kind: StatefulSet
+      metadata:
+        labels:
+          app.kubernetes.io/instance: ${sts.name}
+          app.kubernetes.io/name: ${sts.name}-statefulset
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app.kubernetes.io/instance: ${sts.name}
+            app.kubernetes.io/name: ${sts.name}-statefulset
+        template:
+          metadata:
+            labels:
+              app.kubernetes.io/instance: ${sts.name}
+              app.kubernetes.io/name: ${sts.name}-statefulset
+          spec:
+            containers:
+            - env:
+              - name: OPENSEARCH_INITIAL_ADMIN_PASSWORD
+                value: ${input.admin_password}
+              - name: discovery.type
+                value: single-node
+              image: opensearchproject/opensearch:${input.version}
+              name: postgres
+              ports:
+              - containerPort: 9200
+                name: opensearch
+                protocol: TCP
+              - containerPort: 9600
+                name: opensearch-perf
+                protocol: TCP
+              resources:
+                limits:
+                  cpu: ${input.maxcpu}m
+                  memory: ${input.maxmemory}Mi
+                requests:
+                  cpu: ${input.mincpu}m
+                  memory: ${input.minmemory}Mi
+              volumeMounts:
+              - mountPath: /usr/share/opensearch/data
+                name: ${sts.name}-storage
+            volumes:
+            - name: ${sts.name}-storage
+              persistentVolumeClaim:
+                claimName: ${sts.name}-storage
+        volumeClaimTemplates:
+        - metadata:
+            name: ${sts.name}-storage
+          spec:
+            accessModes:
+            - ReadWriteOncePod
+            resources:
+              requests:
+                storage: ${input.storage}Gi
+  - id: svc
+    template:
+      apiVersion: v1
+      kind: Service
+      metadata: {}
+      spec:
+        ports:
+        - name: opensearch
+          port: 9200
+          protocol: TCP
+          targetPort: 9200
+        - name: opensearch-perf
+          port: 9600
+          protocol: TCP
+          targetPort: 9600
+        selector:
+          app.kubernetes.io/instance: ${sts.name}
+          app.kubernetes.io/name: ${sts.name}-statefulset

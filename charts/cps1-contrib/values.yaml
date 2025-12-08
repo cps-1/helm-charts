@@ -33,3 +33,13 @@ resources: {}
 #   dbSubnetGroupName: "yourdbsubnet"
 #   vpcSecurityGroupIDs:
 #     - sg-12345678910111213
+# awsopensearch:
+#   vpcOptions:
+#     subnetIDs:
+#       - subnet-0cf3c7cbf88c1a416
+#     securityGroupIDs:
+#       - sg-0e4db015e117ed274
+#   clusterConfig:
+#     instanceType: t3.medium.search
+#   ebsOptions:
+#     volumeSize: 10
