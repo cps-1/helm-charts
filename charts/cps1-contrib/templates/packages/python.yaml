@@ -8,7 +8,6 @@ spec:
   icon:
     svg: |
       {{- .Files.Get "images/python.svg" | nindent 6 }}
-    url: null
   properties:
     - name: version
       label: Version
