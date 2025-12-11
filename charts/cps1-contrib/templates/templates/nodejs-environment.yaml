@@ -1,18 +1,24 @@
 {{- if has "nodejs" .Values.includeTemplates }}
-apiVersion: cps1.tech/v1alpha1
+apiVersion: cps1.tech/v1alpha2
 kind: Template
 metadata:
-  name: nodejs-environment
+  name: nodejs-env
 spec:
-  baseImage: ghcr.io/cps-1/base-image:20250624
   description: Includes latest NodeJS LTS along with other JavaScript tooling.
-  icon: /icons/nodejs.svg
-  template:
-    components:
-    - name: nodejs_environment
-      service:
-        packages:
-        - name: nodejs
-          properties:
-            version: v24
+  icon:
+    svg: |
+      {{- .Files.Get "images/nodejs.svg" | nindent 6 }}
+  workspaces:
+  - id: nodejs-workspace
+    baseImage: ghcr.io/cps-1/base-image:20250624
+    packages:
+    - inputData:
+        version: v24
+      packageRef:
+        name: nodejs
+        namespace: {{ .Release.Namespace }}
+    ports: []
+    repositories: []
+    env: []
+  resources: []
 {{- end }}

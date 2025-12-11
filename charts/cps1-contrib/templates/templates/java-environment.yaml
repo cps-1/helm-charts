@@ -1,18 +1,24 @@
 {{- if has "java" .Values.includeTemplates }}
-apiVersion: cps1.tech/v1alpha1
+apiVersion: cps1.tech/v1alpha2
 kind: Template
 metadata:
-  name: java-environment
+  name: java-env
 spec:
-  baseImage: ghcr.io/cps-1/base-image:20250624
   description: Includes latest Java LTS version of Eclipse Temurin.
-  icon: /icons/java.svg
-  template:
-    components:
-    - name: java_environment
-      service:
-        packages:
-        - name: java
-          properties:
-            version: 21.0.7-tem
+  icon:
+    svg: |
+      {{- .Files.Get "images/java.svg" | nindent 6 }}
+  workspaces:
+  - id: java-workspace
+    baseImage: ghcr.io/cps-1/base-image:20250624
+    packages:
+    - inputData:
+        version: 21.0.7-tem
+      packageRef:
+        name: java
+        namespace: {{ .Release.Namespace }}
+    ports: []
+    repositories: []
+    env: []
+  resources: []
 {{- end }}

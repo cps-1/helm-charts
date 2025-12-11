@@ -1,16 +1,22 @@
 {{- if has "rust" .Values.includeTemplates }}
-apiVersion: cps1.tech/v1alpha1
+apiVersion: cps1.tech/v1alpha2
 kind: Template
 metadata:
-  name: rust-environment
+  name: rust-env
 spec:
-  baseImage: ghcr.io/cps-1/base-image:20250624
+  icon:
+    svg: |
+      {{- .Files.Get "images/rust.svg" | nindent 6 }}
   description: Includes latest Rust.
-  icon: /icons/rust.svg
-  template:
-    components:
-    - name: rust_environment
-      service:
-        packages:
-        - name: rust
+  workspaces:
+  - id: rust-workspace
+    baseImage: ghcr.io/cps-1/base-image:20250624
+    packages:
+    - packageRef:
+        name: rust
+        namespace: {{ .Release.Namespace }}
+    ports: []
+    repositories: []
+    env: []
+  resources: []
 {{- end }}
