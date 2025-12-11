@@ -19,6 +19,12 @@ spec:
       kind: string
       required: true
       default: mysql
+    - name: database_name
+      label: Database Name
+      tip: The name of a database created on startup.
+      kind: string
+      required: true
+      default: mysql
     - name: password
       label: Password
       tip: The password for the first database supersuser.
@@ -50,6 +56,7 @@ spec:
           engineVersion: "{{ .Values.resources.awsauroramysql.engineVersion }}"
           dbSubnetGroupName: {{ .Values.resources.awsauroramysql.dbSubnetGroupName }}
           vpcSecurityGroupIDs: {{ .Values.resources.awsauroramysql.vpcSecurityGroupIDs }}
+          databaseName: ${input.database_name}
           masterUsername: ${input.username}
           masterUserPassword:
             namespace: ${secret.namespace}
