@@ -132,6 +132,8 @@ spec:
                 resources:
                   requests:
                     storage: ${input.storage}Gi
+          persistentVolumeClaimRetentionPolicy:
+            whenDeleted: Delete
     - id: svc
       template:
         apiVersion: v1
