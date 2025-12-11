@@ -45,7 +45,6 @@ spec:
       tip: The password for the master user.
       kind: secret
       required: true
-      #default: 
   output:
     - name: master_username
       source: ${input.master_username}
@@ -60,45 +59,38 @@ spec:
         kind: Domain
         metadata:
           labels:
-            app.kubernetes.io/name: ${oss.name}-domain
+            app.kubernetes.io/name: aws_open_search_service_domain
             app.kubernetes.io/instance: ${oss.name}
         spec:
           name: ${oss.name}
           engineVersion: ${input.engine_version}
-          clusterConfig:
-            instanceType: {{ .Values.resources.awsopensearch.clusterConfig.instanceType }}
-            #dedicatedMasterEnabled: false
-            #instanceCount: 1
-            #multiAZWithStandbyEnabled: false
-            #dedicatedMasterCount: $MASTER_NODE_COUNT
-            #instanceCount: $DATA_NODE_COUNT
-            #zoneAwarenessEnabled: false
           vpcOptions:
-            subnetIDs: {{ .Values.resources.awsopensearch.vpcOptions.subnetIDs }}
             securityGroupIDs: {{ .Values.resources.awsopensearch.vpcOptions.securityGroupIDs }}
+            subnetIDs: {{ .Values.resources.awsopensearch.vpcOptions.subnetIDs }}
+          clusterConfig:
+            dedicatedMasterEnabled: false
+            instanceCount: 1
+            instanceType: {{ .Values.resources.awsopensearch.clusterConfig.instanceType }}
           ebsOptions:
             ebsEnabled: true
             volumeSize: {{ .Values.resources.awsopensearch.ebsOptions.volumeSize }}
             volumeType: gp3
-          # encryptionAtRestOptions.enabled, domainEndpointOptions.enforceHTTPS
-          # nodeToNodeEncryptionOptions.enabled need to be set in order to use
-          # advancedSecurityOptions...
-          domainEndpointOptions:
-            enforceHTTPS: true
-          encryptionAtRestOptions:
-            enabled: true
+          accessPolicies: '{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":"*"},"Action":"es:*","Resource":"arn:aws:es:*:*:domain/*"}]}'
           nodeToNodeEncryptionOptions:
             enabled: true
+          encryptionAtRestOptions:
+            enabled: true
+          domainEndpointOptions:
+            enforceHTTPS: true
           advancedSecurityOptions:
             enabled: true
             internalUserDatabaseEnabled: true
             masterUserOptions:
-              masterUserName: ${input.master_password}
+              masterUserName: ${input.master_username}
               masterUserPassword:
                 namespace: ${secret.namespace}
                 name: ${secret.name}
                 key: password
-        
     - id: secret
       template:
         apiVersion: v1
