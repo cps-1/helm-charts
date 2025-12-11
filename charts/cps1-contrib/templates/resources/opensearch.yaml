@@ -1,3 +1,4 @@
+{{- if has "opensearch" .Values.includeResources }}
 apiVersion: cps1.tech/v1alpha1
 kind: ResourceSet
 metadata:
@@ -149,3 +150,4 @@ spec:
         selector:
           app.kubernetes.io/instance: ${sts.name}
           app.kubernetes.io/name: ${sts.name}-statefulset
+{{- end }}
