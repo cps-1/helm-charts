@@ -36,9 +36,9 @@ resources: {}
 # awsopensearch:
 #   vpcOptions:
 #     subnetIDs:
-#       - subnet-0cf3c7cbf88c1a416
+#       - subnet-12345678910111213
 #     securityGroupIDs:
-#       - sg-0e4db015e117ed274
+#       - sg-12345678910111213
 #   clusterConfig:
 #     instanceType: t3.medium.search
 #   ebsOptions:
