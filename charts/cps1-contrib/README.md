@@ -10,7 +10,7 @@ For more information, please refer to our documentation: https://docs.cps1.tech
 
 | Package | Supported versions                          | Extra Tools                      |
 |----------|-----------------------------------|----------------------------------|
-| ![Python](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg) **Python** | 3.10, 3.11, 3.12, 3.13                   | uv, pip, pipx, virtualenv, poetry           |
+| ![Python](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg) **Python** | 3.10, 3.11, 3.12, 3.13, 3.14                   | uv, pip, pipx, virtualenv, poetry           |
 | ![Dotnet](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg) **.NET Core** | 8.0, 9.0                | dotnet CLI                 |
 | ![NodeJS](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg) **NodeJS** | 20, 22, 24                    | npm, yarn, nvm                    |
 | ![Rust](https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/rust/rust-original.svg) **Rust** | stable       | cargo, rustup, clippy             |

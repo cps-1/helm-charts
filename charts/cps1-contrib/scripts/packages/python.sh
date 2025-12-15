@@ -1,33 +1,33 @@
 #!/bin/bash
 set -euo pipefail
 
-: "${CPS1_PYTHON_VERSION:='3.13'}"
-FULL_VERSION="3.13.7"
+: "${CPS1_PYTHON_VERSION:='3.14'}"
 HOME=/home/user
+ASTRAL_RELEASE=20251209
 
 case $CPS1_PYTHON_VERSION in
-  3.9)
-    FULL_VERSION="3.9.23"
-    ;;
   3.10)
-    FULL_VERSION="3.10.18"
+    FULL_VERSION="3.10.19"
     ;;
   3.11)
-    FULL_VERSION="3.11.13"
+    FULL_VERSION="3.11.14"
     ;;
   3.12)
-    FULL_VERSION="3.12.11"
+    FULL_VERSION="3.12.12"
     ;;
-  # Default to latest stable (3.13)
+  3.13)
+    FULL_VERSION="3.13.11"
+    ;;
+  # Default to latest stable (3.14)
   *)
-    FULL_VERSION="3.13.7"
+    FULL_VERSION="3.14.2"
     ;;
 esac
 
 apt-get install -y zstd=1.5.5+dfsg2-2build1
 
 curl -o python.tar.zst \
-    -L "https://github.com/astral-sh/python-build-standalone/releases/download/20250918/cpython-${FULL_VERSION}+20250918-x86_64-unknown-linux-gnu-debug-full.tar.zst" && \
+    -L "https://github.com/astral-sh/python-build-standalone/releases/download/${ASTRAL_RELEASE}/cpython-${FULL_VERSION}+${ASTRAL_RELEASE}-x86_64-unknown-linux-gnu-debug-full.tar.zst" && \
     mkdir /opt/python && \
     tar axf python.tar.zst -C /opt/python && \
     rm python.tar.zst
