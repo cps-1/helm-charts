@@ -23,6 +23,18 @@ entries:
     version: 0.1.0-rc1
   cps1-contrib:
   - apiVersion: v2
+    appVersion: 0.4.1
+    created: "2025-12-16T12:16:32.449739235Z"
+    description: Helm chart with a collection of Resources, Templates and Packages
+      for the CPS1 Platform
+    digest: 4823dc25e81782c64ec056e207ebe527c354b0125bccf9bc9fb337faf148f980
+    kubeVersion: '>= 1.30.0-0'
+    name: cps1-contrib
+    type: application
+    urls:
+    - cps1-contrib-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
     appVersion: 0.4.0
     created: "2025-12-11T16:58:13.076765488Z"
     description: Helm chart with a collection of Resources, Templates and Packages
@@ -132,18 +144,6 @@ entries:
     version: 0.1.0
   - apiVersion: v2
     appVersion: v0.1.0-rc7
-    created: "2025-06-26T18:11:18.01766259Z"
-    description: Helm chart with a collection of Resources, Templates and Packages
-      for the CPS1 Platform
-    digest: 178f4b3eed068aebe40a21e41356907f4bab35f0e7703f23651d6494a7c2841d
-    kubeVersion: '>= 1.30.0-0'
-    name: cps1-contrib
-    type: application
-    urls:
-    - cps1-contrib-0.1.0-rc8.tgz
-    version: 0.1.0-rc8
-  - apiVersion: v2
-    appVersion: v0.1.0-rc7
     created: "2025-06-25T01:17:03.589195166Z"
     description: Helm chart with a collection of Resources, Templates and Packages
       for the CPS1 Platform
@@ -160,6 +160,18 @@ entries:
     description: Helm chart with a collection of Resources, Templates and Packages
       for the CPS1 Platform
     digest: c59f51a0bb4b9cb833e070afd86c57f9ab0771c6f59c568fbad339b56bb5f458
+    kubeVersion: '>= 1.30.0-0'
+    name: cps1-contrib
+    type: application
+    urls:
+    - cps1-contrib-0.1.0-rc8.tgz
+    version: 0.1.0-rc8
+  - apiVersion: v2
+    appVersion: v0.1.0-rc7
+    created: "2025-06-26T18:11:18.01766259Z"
+    description: Helm chart with a collection of Resources, Templates and Packages
+      for the CPS1 Platform
+    digest: 178f4b3eed068aebe40a21e41356907f4bab35f0e7703f23651d6494a7c2841d
     kubeVersion: '>= 1.30.0-0'
     name: cps1-contrib
     type: application
@@ -264,6 +276,17 @@ entries:
     version: 0.0.20250506-N
   cps1-crds:
   - apiVersion: v2
+    appVersion: 0.4.1
+    created: "2025-12-16T12:16:32.630386805Z"
+    description: CPS1 Custom Resource Definitions
+    digest: d0c73cef4f00210839464ebde6759315fdeef7b0e5afdf2376d64f2062bb35d0
+    kubeVersion: '>= 1.30.0-0'
+    name: cps1-crds
+    type: application
+    urls:
+    - cps1-crds-0.4.1.tgz
+    version: 0.4.1
+  - apiVersion: v2
     appVersion: 0.4.0
     created: "2025-12-11T16:58:13.243042786Z"
     description: CPS1 Custom Resource Definitions
@@ -342,17 +365,6 @@ entries:
     version: v0.1.0
   - apiVersion: v2
     appVersion: v0.1.0-rc6
-    created: "2025-06-10T23:27:24.070968827Z"
-    description: CPS1 Custom Resource Definitions
-    digest: e8a74fbab7a0aed5dbd38e455ad7bc595f5058251ca4d0a4ec812e2a35487119
-    kubeVersion: '>= 1.31.0'
-    name: cps1-crds
-    type: application
-    urls:
-    - cps1-crds-v0.1.0-rc6.tgz
-    version: v0.1.0-rc6
-  - apiVersion: v2
-    appVersion: v0.1.0-rc6
     created: "2025-06-16T13:18:37.342090105Z"
     description: CPS1 Custom Resource Definitions
     digest: 1285f1e011b45cfd962b931653e38cfd0fe7d8f66b95a50ce2f3a445c44e55dd
@@ -385,6 +397,17 @@ entries:
     - cps1-crds-v0.1.0-rc6.tgz
     version: v0.1.0-rc6
   - apiVersion: v2
+    appVersion: v0.1.0-rc6
+    created: "2025-06-10T23:27:24.070968827Z"
+    description: CPS1 Custom Resource Definitions
+    digest: e8a74fbab7a0aed5dbd38e455ad7bc595f5058251ca4d0a4ec812e2a35487119
+    kubeVersion: '>= 1.31.0'
+    name: cps1-crds
+    type: application
+    urls:
+    - cps1-crds-v0.1.0-rc6.tgz
+    version: v0.1.0-rc6
+  - apiVersion: v2
     appVersion: v0.1.0-rc3
     created: "2025-06-06T13:51:42.09282451Z"
     description: Helm chart to install CPS1 Custom Resource Definitions in your Kubernetes
@@ -397,6 +420,18 @@ entries:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-crds-0.0.20250606-N/cps1-crds-0.0.20250606-N.tgz
     version: 0.0.20250606-N
   cps1-platform:
+  - apiVersion: v2
+    appVersion: 0.4.1
+    created: "2025-12-16T12:16:32.79106381Z"
+    description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes
+      cluster
+    digest: 4562b6718f2ba59238d3f5dbf2d710f18c47c18fd7925139b3eca5c3ab0aa2b6
+    kubeVersion: '>= 1.30.0-0'
+    name: cps1-platform
+    type: application
+    urls:
+    - cps1-platform-0.4.1.tgz
+    version: 0.4.1
   - apiVersion: v2
     appVersion: 0.4.0
     created: "2025-12-11T16:58:13.429282998Z"
@@ -507,18 +542,6 @@ entries:
     version: 0.1.0
   - apiVersion: v2
     appVersion: v0.1.0-rc6
-    created: "2025-06-26T18:11:18.289379944Z"
-    description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes
-      cluster
-    digest: 9ba14f5abddce3dd498125aa383399c730ab4704c5386a3262f306d0c51954d1
-    kubeVersion: '>= 1.30.0-0'
-    name: cps1-platform
-    type: application
-    urls:
-    - cps1-platform-0.1.0-rc7.tgz
-    version: 0.1.0-rc7
-  - apiVersion: v2
-    appVersion: v0.1.0-rc6
     created: "2025-06-26T12:37:20.311451984Z"
     description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes
       cluster
@@ -536,6 +559,18 @@ entries:
       cluster
     digest: 4bbe33d2d54d0b34aa7987274ad1eb62ed2e27c885ac30e49069f786ab4e0e52
     kubeVersion: '>= 1.31.0'
+    name: cps1-platform
+    type: application
+    urls:
+    - cps1-platform-0.1.0-rc7.tgz
+    version: 0.1.0-rc7
+  - apiVersion: v2
+    appVersion: v0.1.0-rc6
+    created: "2025-06-26T18:11:18.289379944Z"
+    description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes
+      cluster
+    digest: 9ba14f5abddce3dd498125aa383399c730ab4704c5386a3262f306d0c51954d1
+    kubeVersion: '>= 1.30.0-0'
     name: cps1-platform
     type: application
     urls:
@@ -576,4 +611,4 @@ entries:
     urls:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-platform-0.0.20250610-N/cps1-platform-0.0.20250610-N.tgz
     version: 0.0.20250610-N
-generated: "2025-12-11T16:58:13.429631974Z"
+generated: "2025-12-16T12:16:32.791395881Z"
