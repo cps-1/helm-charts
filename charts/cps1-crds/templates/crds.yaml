@@ -180,7 +180,7 @@ spec:
                 type: string
                 x-kubernetes-validations:
                 - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
-                  rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
+                  rule: self.matches('^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$')
               packages:
                 default: []
                 items:
@@ -446,7 +446,11 @@ spec:
                       description: |-
                         The property identifier. Must be unique across the collection of
                         properties from this resource.
+                      maxLength: 32
                       type: string
+                      x-kubernetes-validations:
+                      - message: a name must consist of lower case alphanumeric characters or '_'
+                        rule: self.matches('^[_a-z0-9]+$')
                     required:
                       description: If this property is required or if its optional.
                       type: boolean
@@ -470,6 +474,7 @@ spec:
                   - name
                   - required
                   type: object
+                maxItems: 32
                 type: array
               label:
                 type: string
@@ -480,7 +485,11 @@ spec:
                       description: |-
                         The property identifier. Must be unique across the collection of
                         properties from this resource.
+                      maxLength: 32
                       type: string
+                      x-kubernetes-validations:
+                      - message: a name must consist of lower case alphanumeric characters or '_'
+                        rule: self.matches('^[_a-z0-9]+$')
                     source:
                       description: A CEL expression with the output source
                       type: string
@@ -488,6 +497,7 @@ spec:
                   - name
                   - source
                   type: object
+                maxItems: 32
                 type: array
               resources:
                 items:
@@ -828,7 +838,7 @@ spec:
                       type: string
                       x-kubernetes-validations:
                       - message: a ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
-                        rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
+                        rule: self.matches('^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$')
                     inputData:
                       additionalProperties: true
                       default: {}
@@ -871,7 +881,7 @@ spec:
                       type: string
                       x-kubernetes-validations:
                       - message: a ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
-                        rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
+                        rule: self.matches('^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$')
                     packages:
                       items:
                         properties:
@@ -1015,7 +1025,7 @@ spec:
                       type: string
                       x-kubernetes-validations:
                       - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
-                        rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
+                        rule: self.matches('^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$')
                     inputData:
                       additionalProperties: true
                       default: {}
@@ -1078,7 +1088,11 @@ spec:
                                 description: |-
                                   The property identifier. Must be unique across the collection of
                                   properties from this resource.
+                                maxLength: 32
                                 type: string
+                                x-kubernetes-validations:
+                                - message: a name must consist of lower case alphanumeric characters or '_'
+                                  rule: self.matches('^[_a-z0-9]+$')
                               required:
                                 description: If this property is required or if its optional.
                                 type: boolean
@@ -1102,6 +1116,7 @@ spec:
                             - name
                             - required
                             type: object
+                          maxItems: 32
                           type: array
                         label:
                           type: string
@@ -1112,7 +1127,11 @@ spec:
                                 description: |-
                                   The property identifier. Must be unique across the collection of
                                   properties from this resource.
+                                maxLength: 32
                                 type: string
+                                x-kubernetes-validations:
+                                - message: a name must consist of lower case alphanumeric characters or '_'
+                                  rule: self.matches('^[_a-z0-9]+$')
                               source:
                                 description: A CEL expression with the output source
                                 type: string
@@ -1120,6 +1139,7 @@ spec:
                             - name
                             - source
                             type: object
+                          maxItems: 32
                           type: array
                         resources:
                           items:
@@ -1219,7 +1239,7 @@ spec:
                       type: string
                       x-kubernetes-validations:
                       - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
-                        rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
+                        rule: self.matches('^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$')
                     packages:
                       default: []
                       items:
@@ -1447,6 +1467,9 @@ spec:
         properties:
           spec:
             properties:
+              buildWithUserNamespaces:
+                default: false
+                type: boolean
               buildahImage:
                 default: quay.io/containers/buildah:v1.40.1-immutable
                 type: string
@@ -1761,7 +1784,7 @@ spec:
                           type: string
                           x-kubernetes-validations:
                           - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
-                            rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
+                            rule: self.matches('^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$')
                         inputData:
                           additionalProperties: true
                           default: {}
@@ -1824,7 +1847,11 @@ spec:
                                     description: |-
                                       The property identifier. Must be unique across the collection of
                                       properties from this resource.
+                                    maxLength: 32
                                     type: string
+                                    x-kubernetes-validations:
+                                    - message: a name must consist of lower case alphanumeric characters or '_'
+                                      rule: self.matches('^[_a-z0-9]+$')
                                   required:
                                     description: If this property is required or if its optional.
                                     type: boolean
@@ -1848,6 +1875,7 @@ spec:
                                 - name
                                 - required
                                 type: object
+                              maxItems: 32
                               type: array
                             label:
                               type: string
@@ -1858,7 +1886,11 @@ spec:
                                     description: |-
                                       The property identifier. Must be unique across the collection of
                                       properties from this resource.
+                                    maxLength: 32
                                     type: string
+                                    x-kubernetes-validations:
+                                    - message: a name must consist of lower case alphanumeric characters or '_'
+                                      rule: self.matches('^[_a-z0-9]+$')
                                   source:
                                     description: A CEL expression with the output source
                                     type: string
@@ -1866,6 +1898,7 @@ spec:
                                 - name
                                 - source
                                 type: object
+                              maxItems: 32
                               type: array
                             resources:
                               items:
@@ -1965,7 +1998,7 @@ spec:
                           type: string
                           x-kubernetes-validations:
                           - message: a workspace ID must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
-                            rule: self.matches('^[a-z0-9](?:[-.a-z0-9]*[a-z0-9])?$')
+                            rule: self.matches('^[a-z0-9](?:[-a-z0-9]*[a-z0-9])?$')
                         packages:
                           default: []
                           items:
