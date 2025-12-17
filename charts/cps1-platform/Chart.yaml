@@ -3,5 +3,5 @@ name: cps1-platform
 description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes cluster
 type: application
 kubeVersion: ">= 1.30.0-0"
-version: 0.4.1
+version: 0.4.2
 appVersion: "0.4.1"
