@@ -20,9 +20,10 @@ For more information, please refer to our documentation: https://docs.cps1.tech
 
 | Resource | Versions                  |
 |----------|---------------------------|
-| ![MariaDB](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mariadb/mariadb-original.svg) **MariaDB** | 10.6, 10.11, 11.4, 11.8          |
-| ![PostgreSQL](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg) **PostgreSQL** | 14, 15, 16, 17              |
-| ![Redis](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg) **Redis** | 7.2, 7.4, 8.0                        |
+| ![MariaDB](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mariadb/mariadb-original.svg) **MariaDB** | 10.6, 10.11, 11.4, 11.8, 12.1          |
+| ![MySQL](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg) **MySQL** | 8.0, 8.4, 9.5           |
+| ![PostgreSQL](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg) **PostgreSQL** | 14, 15, 16, 17, 18   |
+| ![Redis](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg) **Redis** | 7.4, 8.0, 8.2, 8.4            |
 
 ## Templates
 

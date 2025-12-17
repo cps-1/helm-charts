@@ -16,8 +16,8 @@ spec:
       label: Version
       kind: select
       required: true
-      values: ['7.4', '8.0', '8.2']
-      default: '8.2'
+      values: ['7.4', '8.0', '8.2', '8.4']
+      default: '8.4'
     - name: minmemory
       label: Minimum Memory
       tip: |

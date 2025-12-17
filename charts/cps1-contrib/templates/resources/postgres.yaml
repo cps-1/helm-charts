@@ -29,8 +29,8 @@ spec:
       label: Version
       kind: select
       required: true
-      values: ['13.16', '14.13', '15.8', '16.4']
-      default: '16.4'
+      values: ['14', '15', '16', '17', '18']
+      default: '18'
     - name: minmemory
       label: Minimum Memory
       tip: |
@@ -100,7 +100,7 @@ spec:
                 app.kubernetes.io/instance: ${sts.name}
             spec:
               containers:
-                - image: postgres:${input.version}-bookworm
+                - image: postgres:${input.version}
                   name: postgres
                   resources:
                     requests:
