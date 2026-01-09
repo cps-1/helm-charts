@@ -1,0 +1,68 @@
+{{ if .Values.environmentScheduler.enabled }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.environmentScheduler.serviceAccountName }}
+  namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Values.environmentScheduler.clusterRoleName }}
+rules:
+  - apiGroups: [cps1.tech]
+    resources: [environments]
+    verbs: [get, list, patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Values.environmentScheduler.clusterRoleBindingName }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Values.environmentScheduler.clusterRoleName }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Values.environmentScheduler.serviceAccountName }}
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.environmentScheduler.cronJob.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: "{{ .Values.environmentScheduler.cronJob.schedule }}"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          serviceAccountName: {{ .Values.environmentScheduler.serviceAccountName }}
+          restartPolicy: Never
+          containers:
+            - name: scheduler
+              image: "{{ .Values.environmentScheduler.cronJob.image.name }}:{{ .Values.environmentScheduler.cronJob.image.tag }}"
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -euo pipefail
+
+                  echo "Time to pause all environments."
+
+                  kubectl get environments --all-namespaces \
+                    -o jsonpath='{range .items[*]}{.metadata.namespace}{" "}{.metadata.name}{"\n"}{end}' \
+                  | while read -r namespace name; do
+                      echo "Pausing environment ${name} at ${namespace}"
+                      kubectl -n "${namespace}" patch environment "${name}" \
+                        --type='merge' -p '{"spec":{"run":false}}'
+                    done
+
+                  echo "All environments successfully paused."
+{{ end }}
