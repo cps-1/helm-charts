@@ -14,8 +14,8 @@ spec:
       tip: .NET version
       kind: select
       required: true
-      values: ["9.0", "8.0"]
-      default: "9.0"
+      values: {{- toYaml .Values.packages.dotnet.version.values | nindent 8 }}
+      default: "{{ .Values.packages.dotnet.version.default }}"
   setupScript: |
     {{- .Files.Get "scripts/packages/dotnet.sh" | nindent 4 }}
 {{- end }}

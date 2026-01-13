@@ -14,8 +14,8 @@ spec:
       tip: Go version
       kind: select
       required: true
-      values: ["1.24.4", "1.23.10"]
-      default: "1.24.4"
+      values: {{- toYaml .Values.packages.go.version.values | nindent 8 }}
+      default: {{ .Values.packages.go.version.default }}
   setupScript: |
     {{- .Files.Get "scripts/packages/go.sh" | nindent 4 }}
 

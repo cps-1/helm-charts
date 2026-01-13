@@ -11,6 +11,54 @@ includePackages:
   - python
   - rust
 
+packages:
+  java:
+    version:
+      values:
+        - "25.0.1-tem"
+        - "21.0.9-tem"
+        - "17.0.17-tem"
+      default: "25.0.1-tem"
+  dotnet:
+    version:
+      values:
+        - "9.0"
+        - "8.0"
+      default: "9.0"
+  go:
+    version:
+      values:
+        - "1.25.5"
+        - "1.24.11"
+      default: "1.25.5"
+  kubectl:
+    version:
+      default: "v1.33.3"
+  nodejs:
+    version:
+      values:
+        - "v25"
+        - "v24"
+        - "v22"
+        - "v20"
+      default: "v25"
+  php:
+    version:
+      values:
+        - "8.5"
+        - "8.4"
+        - "8.3"
+        - "8.2"
+      default: "8.5"
+  python:
+    version:
+      values:
+        - "3.14"
+        - "3.13"
+        - "3.12"
+        - "3.10"
+      default: "3.14"
+
 includeResources:
   - mariadb
   - postgres

@@ -15,7 +15,7 @@ spec:
         The full version specifier (e.g: v1.31.0). The kubectl version should
         be the same as the cluster it'll operate.
       kind: string
-      default: v1.33.3
+      default: {{ .Values.packages.kubectl.version.default }}
       required: true
   setupScript: |
     {{- .Files.Get "scripts/packages/kubectl.sh" | nindent 4 }}

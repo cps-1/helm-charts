@@ -14,8 +14,8 @@ spec:
       tip: PHP version
       kind: select
       required: true
-      values: ["8.4", "8.3", "8.2", "8.1"]
-      default: "8.4"
+      values: {{- toYaml .Values.packages.php.version.values | nindent 8 }}
+      default: {{ .Values.packages.php.version.default }}
   setupScript: |
     {{- .Files.Get "scripts/packages/php.sh" | nindent 4 }}
 
