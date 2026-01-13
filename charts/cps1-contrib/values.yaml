@@ -65,8 +65,47 @@ includeResources:
   - redis
   - mysql
 
-resources: {}
-#
+resources:
+  mariadb:
+    version:
+      values:
+        - "12.1"
+        - "11.8"
+        - "11.4"
+        - "10.11"
+        - "10.6"
+      default: "12.1"
+  mysql:
+    version:
+      values:
+        - "9.5"
+        - "8.4"
+        - "8.0"
+      default: "9.5"
+  postgres:
+    version:
+      values:
+        - "18"
+        - "17"
+        - "16"
+        - "15"
+        - "14"
+      default: "18"
+  opensearch:
+    version:
+      values:
+        - "3"
+        - "2"
+      default: "3"
+  redis:
+    version:
+      values:
+        - "8.4"
+        - "8.2"
+        - "8.0"
+        - "7.4"
+      default: "8.4"
+
 # Examples:
 #
 # awsrdspostgres:

@@ -29,8 +29,8 @@ spec:
       label: Version
       kind: select
       required: true
-      values: ['14', '15', '16', '17', '18']
-      default: '18'
+      values: {{- toYaml .Values.resources.postgres.version.values | nindent 8 }}
+      default: "{{ .Values.resources.postgres.version.default }}"
     - name: minmemory
       label: Minimum Memory
       tip: |

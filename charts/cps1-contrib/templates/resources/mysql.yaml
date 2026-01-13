@@ -30,8 +30,8 @@ spec:
       label: Version
       kind: select
       required: true
-      values: ['8.0', '8.4', '9.5']
-      default: '9.5'
+      values: {{- toYaml .Values.resources.mysql.version.values | nindent 8 }}
+      default: "{{ .Values.resources.mysql.version.default }}"
     - name: minmemory
       label: Minimum Memory
       tip: |

@@ -24,8 +24,8 @@ spec:
       label: Version
       kind: select
       required: true
-      values: ['10.6', '10.11', '11.4', '11.8', '12.1']
-      default: '12.1'
+      values: {{- toYaml .Values.resources.mariadb.version.values | nindent 8 }}
+      default: "{{ .Values.resources.mariadb.version.default }}"
     - name: minmemory
       label: Minimum Memory
       tip: |
