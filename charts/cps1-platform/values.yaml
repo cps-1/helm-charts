@@ -38,6 +38,22 @@ gateway:
   service:
     annotations: {}
 
+ingress:
+  className: nginx
+  annotations: {}
+
+# Options to control the operator and gateway pod placement
+workloads:
+  # See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  nodeSelector: {}
+  # See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
+  affinity: {}
+  # See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
+  tolerations: []
+
+internalRegistry:
+  volumeSize: 50Gi
+
 # Permissions to manage extra resources
 # Example:
 #

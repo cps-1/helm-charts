@@ -21,6 +21,18 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 3001
+      {{- with .Values.workloads.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.workloads.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.workloads.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -69,4 +81,16 @@ spec:
       {{- else }}
             - containerPort: 8080
               protocol: TCP
+      {{- end }}
+      {{- with .Values.workloads.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.workloads.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.workloads.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
       {{- end }}

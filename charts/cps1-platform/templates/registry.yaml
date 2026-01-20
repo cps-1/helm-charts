@@ -8,8 +8,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 50Gi
-
+      storage: {{ .Values.internalRegistry.volumeSize }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -41,7 +40,18 @@ spec:
         - name: registry-storage
           persistentVolumeClaim:
             claimName: cps1-registry-pvc
-
+      {{- with .Values.workloads.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.workloads.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.workloads.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
 ---
 apiVersion: v1
 kind: Service
