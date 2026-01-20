@@ -38,6 +38,10 @@ gateway:
   service:
     annotations: {}
 
+ingress:
+  className: nginx
+  annotations: {}
+
 # Options to control the operator and gateway pod placement
 workloads:
   # See https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
