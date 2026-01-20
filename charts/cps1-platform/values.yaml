@@ -46,6 +46,10 @@ workloads:
   affinity: {}
   # See https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
   tolerations: []
+
+internalRegistry:
+  volumeSize: 50Gi
+
 # Permissions to manage extra resources
 # Example:
 #
