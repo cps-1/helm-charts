@@ -1,6 +1,6 @@
-# CPS1 Contrib
+# CPS1 Catalog
 
-CPS1 Contrib is a curated collection of Packages, Resources and Templates for the [CPS1 Platform](https://cps1.tech).
+CPS1 Catalog is a curated collection of Packages, Resources and Templates for the [CPS1 Platform](https://cps1.tech).
 
 For instructions on how to install, please refer to: https://helm.cps1.tech
 
@@ -32,7 +32,7 @@ We ship templates for each supported language, but they are not installed by def
 You must explicit include what templates you want installed using the `includeTemplates` parameter.
 
 ```
-helm install cps1-contrib cps1/cps1-contrib --set includeTemplates={nodejs,python}
+helm install cps1-catalog cps1/cps1-catalog --set includeTemplates={nodejs,python}
 ```
 
 # Extending CPS1

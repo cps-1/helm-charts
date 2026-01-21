@@ -1,5 +1,5 @@
 apiVersion: v2
-name: cps1-contrib
+name: cps1-catalog
 description: Helm chart with a collection of Resources, Templates and Packages for the CPS1 Platform
 type: application
 kubeVersion: ">= 1.30.0-0"

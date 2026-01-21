@@ -8,7 +8,7 @@ It's free for up to 5 users and one Kubernetes cluster within your organization.
 
 Need more users? Upgrade for full support and no usage limits contacting our team at contact@cps1.tech
 
-You can now proceed with installing the cps1-contrib Helm chart for extra Packages, Resouces and Templates.
+You can now proceed with installing the cps1-catalog Helm chart for extra Packages, Resources and Templates.
 
 For detailed instructions and further information, please refer to our documentation: https://docs.cps1.tech
 
