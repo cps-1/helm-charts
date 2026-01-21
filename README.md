@@ -79,16 +79,16 @@ helm show values cps1/cps1-platform
 
 ### 6. Install packages, resources and templates
 
-CPS1 Contrib is a curated collection of packages, resources, and templates that extend the capabilities of the CPS1 platform.
+CPS1 Catalog is a curated collection of packages, resources, and templates that extend the capabilities of the CPS1 platform.
 
-For details about supported languages, tools, and configurations, visit the CPS1 Contrib repository: [https://github.com/cps-1/helm-charts/tree/main/charts/cps1-contrib](https://github.com/cps-1/helm-charts/tree/main/charts/cps1-contrib).
+For details about supported languages, tools, and configurations, visit the CPS1 Catalog repository: [https://github.com/cps-1/helm-charts/tree/main/charts/cps1-catalog](https://github.com/cps-1/helm-charts/tree/main/charts/cps1-catalog).
 
 The command below installs all packages and resources, and includes only the development environment templates for NodeJS and Python.
 ```
-helm install -n cps1 cps1-contrib cps1/cps1-contrib --set 'includeTemplates={nodejs,python}'
+helm install -n cps1 cps1-catalog cps1/cps1-catalog --set 'includeTemplates={nodejs,python}'
 ```
 
-We welcome contributions of additional packages, resources, and templates to CPS1 Contrib!
+We welcome catalogutions of additional packages, resources, and templates to CPS1 Catalog!
 
 If you encounter any issues or have feedback, please open an issue in our repository: [https://github.com/cps-1/cps1](https://github.com/cps-1/cps1)
 
