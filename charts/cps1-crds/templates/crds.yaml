@@ -503,6 +503,7 @@ spec:
                 items:
                   properties:
                     id:
+                      maxLength: 32
                       type: string
                     template:
                       properties:
@@ -859,6 +860,9 @@ spec:
                   type: object
                 maxItems: 32
                 type: array
+                x-kubernetes-validations:
+                - message: a resource ID must be unique
+                  rule: self.all(w1, self.exists_one(w2, w1.id == w2.id))
               workspaces:
                 items:
                   properties:
@@ -942,6 +946,9 @@ spec:
                   type: object
                 maxItems: 32
                 type: array
+                x-kubernetes-validations:
+                - message: a workspace ID must be unique
+                  rule: self.all(w1, self.exists_one(w2, w1.id == w2.id))
             required:
             - icon
             - resources
@@ -988,8 +995,11 @@ spec:
             type: object
         required:
         - spec
-        title: Template
+        title: TemplateValidated
         type: object
+        x-kubernetes-validations:
+        - message: templates name must have at most 160 characters
+          rule: size(self.metadata.name) <= 160
     served: true
     storage: true
     subresources:
@@ -1145,6 +1155,7 @@ spec:
                           items:
                             properties:
                               id:
+                                maxLength: 32
                                 type: string
                               template:
                                 properties:
@@ -1549,6 +1560,26 @@ spec:
                   account.
                 nullable: true
                 type: object
+              workspaceVolumes:
+                nullable: true
+                properties:
+                  accessMode:
+                    default: ReadWriteOnce
+                    type: string
+                  allocationStrategy:
+                    enum:
+                    - isolatedPerWorkspace
+                    - sharedPerUser
+                    type: string
+                  size:
+                    default: 12Gi
+                    type: string
+                  storageClass:
+                    nullable: true
+                    type: string
+                required:
+                - allocationStrategy
+                type: object
             required:
             - gateway
             - hostname
@@ -1594,6 +1625,33 @@ spec:
         properties:
           spec:
             properties:
+              input:
+                nullable: true
+                properties:
+                  workspaces:
+                    items:
+                      properties:
+                        id:
+                          type: string
+                        repos_branches:
+                          items:
+                            properties:
+                              branch:
+                                type: string
+                              repository:
+                                type: string
+                            required:
+                            - branch
+                            - repository
+                            type: object
+                          type: array
+                      required:
+                      - id
+                      - repos_branches
+                      type: object
+                    nullable: true
+                    type: array
+                type: object
               run:
                 type: boolean
               templateRef:
@@ -1615,8 +1673,11 @@ spec:
             type: object
         required:
         - spec
-        title: Environment
+        title: EnvironmentValidated
         type: object
+        x-kubernetes-validations:
+        - message: environments name must have at most 180 characters
+          rule: size(self.metadata.name) <= 180
     served: true
     storage: true
     subresources:
@@ -1687,7 +1748,15 @@ spec:
                 type: array
               repositories:
                 items:
-                  type: string
+                  properties:
+                    branch:
+                      nullable: true
+                      type: string
+                    uri:
+                      type: string
+                  required:
+                  - uri
+                  type: object
                 type: array
               run:
                 type: boolean
@@ -1772,6 +1841,33 @@ spec:
         properties:
           spec:
             properties:
+              inputSnapshot:
+                nullable: true
+                properties:
+                  workspaces:
+                    items:
+                      properties:
+                        id:
+                          type: string
+                        repos_branches:
+                          items:
+                            properties:
+                              branch:
+                                type: string
+                              repository:
+                                type: string
+                            required:
+                            - branch
+                            - repository
+                            type: object
+                          type: array
+                      required:
+                      - id
+                      - repos_branches
+                      type: object
+                    nullable: true
+                    type: array
+                type: object
               run:
                 type: boolean
               templateSnapshot:
@@ -1904,6 +2000,7 @@ spec:
                               items:
                                 properties:
                                   id:
+                                    maxLength: 32
                                     type: string
                                   template:
                                     properties:
