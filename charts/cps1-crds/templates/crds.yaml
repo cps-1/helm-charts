@@ -288,6 +288,42 @@ spec:
                   - spec
                   type: object
                 type: array
+              podOverride:
+                nullable: true
+                properties:
+                  metadata:
+                    default:
+                      annotations: null
+                      labels: null
+                    description: |-
+                      `ObjectMeta` attributes that are writable, that are not read-only or
+                      populated by the server/system. This also does not include some attributes
+                      that CPS1 itself will set to guarantee resource isolation and
+                      decommissioning, such as:
+                      - name
+                      - namespace
+                      - ownerReferences
+
+                      This also doesn't include finalizers, to avoid preventing the removal of
+                      objects managed by CPS1.
+
+                      That is, it only allows annotations and labels.
+
+                      Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        nullable: true
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        nullable: true
+                        type: object
+                    type: object
+                type: object
+                x-kubernetes-preserve-unknown-fields: true
               ports:
                 default: []
                 items:
@@ -514,17 +550,20 @@ spec:
                         metadata:
                           default:
                             annotations: null
-                            finalizers: null
-                            generate_name: null
                             labels: null
                           description: |-
-                            `ObjectMeta` attributes that are writable, that is not read-only or populated
-                            by the server/system. This also does not include some attributes that CPS1
-                            itself will set to guarantee resource isolation and decommissioning, such
-                            as:
+                            `ObjectMeta` attributes that are writable, that are not read-only or
+                            populated by the server/system. This also does not include some attributes
+                            that CPS1 itself will set to guarantee resource isolation and
+                            decommissioning, such as:
                             - name
                             - namespace
                             - ownerReferences
+
+                            This also doesn't include finalizers, to avoid preventing the removal of
+                            objects managed by CPS1.
+
+                            That is, it only allows annotations and labels.
 
                             Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
                           properties:
@@ -533,14 +572,6 @@ spec:
                                 type: string
                               nullable: true
                               type: object
-                            finalizers:
-                              items:
-                                type: string
-                              nullable: true
-                              type: array
-                            generate_name:
-                              nullable: true
-                              type: string
                             labels:
                               additionalProperties:
                                 type: string
@@ -907,6 +938,42 @@ spec:
                         - packageRef
                         type: object
                       type: array
+                    podOverride:
+                      nullable: true
+                      properties:
+                        metadata:
+                          default:
+                            annotations: null
+                            labels: null
+                          description: |-
+                            `ObjectMeta` attributes that are writable, that are not read-only or
+                            populated by the server/system. This also does not include some attributes
+                            that CPS1 itself will set to guarantee resource isolation and
+                            decommissioning, such as:
+                            - name
+                            - namespace
+                            - ownerReferences
+
+                            This also doesn't include finalizers, to avoid preventing the removal of
+                            objects managed by CPS1.
+
+                            That is, it only allows annotations and labels.
+
+                            Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
+                          properties:
+                            annotations:
+                              additionalProperties:
+                                type: string
+                              nullable: true
+                              type: object
+                            labels:
+                              additionalProperties:
+                                type: string
+                              nullable: true
+                              type: object
+                          type: object
+                      type: object
+                      x-kubernetes-preserve-unknown-fields: true
                     ports:
                       items:
                         properties:
@@ -1166,17 +1233,20 @@ spec:
                                   metadata:
                                     default:
                                       annotations: null
-                                      finalizers: null
-                                      generate_name: null
                                       labels: null
                                     description: |-
-                                      `ObjectMeta` attributes that are writable, that is not read-only or populated
-                                      by the server/system. This also does not include some attributes that CPS1
-                                      itself will set to guarantee resource isolation and decommissioning, such
-                                      as:
+                                      `ObjectMeta` attributes that are writable, that are not read-only or
+                                      populated by the server/system. This also does not include some attributes
+                                      that CPS1 itself will set to guarantee resource isolation and
+                                      decommissioning, such as:
                                       - name
                                       - namespace
                                       - ownerReferences
+
+                                      This also doesn't include finalizers, to avoid preventing the removal of
+                                      objects managed by CPS1.
+
+                                      That is, it only allows annotations and labels.
 
                                       Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
                                     properties:
@@ -1185,14 +1255,6 @@ spec:
                                           type: string
                                         nullable: true
                                         type: object
-                                      finalizers:
-                                        items:
-                                          type: string
-                                        nullable: true
-                                        type: array
-                                      generate_name:
-                                        nullable: true
-                                        type: string
                                       labels:
                                         additionalProperties:
                                           type: string
@@ -1358,6 +1420,42 @@ spec:
                         - spec
                         type: object
                       type: array
+                    podOverride:
+                      nullable: true
+                      properties:
+                        metadata:
+                          default:
+                            annotations: null
+                            labels: null
+                          description: |-
+                            `ObjectMeta` attributes that are writable, that are not read-only or
+                            populated by the server/system. This also does not include some attributes
+                            that CPS1 itself will set to guarantee resource isolation and
+                            decommissioning, such as:
+                            - name
+                            - namespace
+                            - ownerReferences
+
+                            This also doesn't include finalizers, to avoid preventing the removal of
+                            objects managed by CPS1.
+
+                            That is, it only allows annotations and labels.
+
+                            Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
+                          properties:
+                            annotations:
+                              additionalProperties:
+                                type: string
+                              nullable: true
+                              type: object
+                            labels:
+                              additionalProperties:
+                                type: string
+                              nullable: true
+                              type: object
+                          type: object
+                      type: object
+                      x-kubernetes-preserve-unknown-fields: true
                     ports:
                       default: []
                       items:
@@ -1721,6 +1819,42 @@ spec:
                 type: string
               image:
                 type: string
+              podOverride:
+                nullable: true
+                properties:
+                  metadata:
+                    default:
+                      annotations: null
+                      labels: null
+                    description: |-
+                      `ObjectMeta` attributes that are writable, that are not read-only or
+                      populated by the server/system. This also does not include some attributes
+                      that CPS1 itself will set to guarantee resource isolation and
+                      decommissioning, such as:
+                      - name
+                      - namespace
+                      - ownerReferences
+
+                      This also doesn't include finalizers, to avoid preventing the removal of
+                      objects managed by CPS1.
+
+                      That is, it only allows annotations and labels.
+
+                      Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
+                    properties:
+                      annotations:
+                        additionalProperties:
+                          type: string
+                        nullable: true
+                        type: object
+                      labels:
+                        additionalProperties:
+                          type: string
+                        nullable: true
+                        type: object
+                    type: object
+                type: object
+                x-kubernetes-preserve-unknown-fields: true
               ports:
                 items:
                   properties:
@@ -2011,17 +2145,20 @@ spec:
                                       metadata:
                                         default:
                                           annotations: null
-                                          finalizers: null
-                                          generate_name: null
                                           labels: null
                                         description: |-
-                                          `ObjectMeta` attributes that are writable, that is not read-only or populated
-                                          by the server/system. This also does not include some attributes that CPS1
-                                          itself will set to guarantee resource isolation and decommissioning, such
-                                          as:
+                                          `ObjectMeta` attributes that are writable, that are not read-only or
+                                          populated by the server/system. This also does not include some attributes
+                                          that CPS1 itself will set to guarantee resource isolation and
+                                          decommissioning, such as:
                                           - name
                                           - namespace
                                           - ownerReferences
+
+                                          This also doesn't include finalizers, to avoid preventing the removal of
+                                          objects managed by CPS1.
+
+                                          That is, it only allows annotations and labels.
 
                                           Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
                                         properties:
@@ -2030,14 +2167,6 @@ spec:
                                               type: string
                                             nullable: true
                                             type: object
-                                          finalizers:
-                                            items:
-                                              type: string
-                                            nullable: true
-                                            type: array
-                                          generate_name:
-                                            nullable: true
-                                            type: string
                                           labels:
                                             additionalProperties:
                                               type: string
@@ -2203,6 +2332,42 @@ spec:
                             - spec
                             type: object
                           type: array
+                        podOverride:
+                          nullable: true
+                          properties:
+                            metadata:
+                              default:
+                                annotations: null
+                                labels: null
+                              description: |-
+                                `ObjectMeta` attributes that are writable, that are not read-only or
+                                populated by the server/system. This also does not include some attributes
+                                that CPS1 itself will set to guarantee resource isolation and
+                                decommissioning, such as:
+                                - name
+                                - namespace
+                                - ownerReferences
+
+                                This also doesn't include finalizers, to avoid preventing the removal of
+                                objects managed by CPS1.
+
+                                That is, it only allows annotations and labels.
+
+                                Based on <https://github.com/Arnavion/k8s-openapi/blob/139dd23/src/v1_31/apimachinery/pkg/apis/meta/v1/object_meta.rs#L5-L64>
+                              properties:
+                                annotations:
+                                  additionalProperties:
+                                    type: string
+                                  nullable: true
+                                  type: object
+                                labels:
+                                  additionalProperties:
+                                    type: string
+                                  nullable: true
+                                  type: object
+                              type: object
+                          type: object
+                          x-kubernetes-preserve-unknown-fields: true
                         ports:
                           default: []
                           items:
