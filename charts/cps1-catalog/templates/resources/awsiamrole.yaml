@@ -1,0 +1,39 @@
+{{- if has "awsiamrole" .Values.includeResources }}
+apiVersion: cps1.tech/v1alpha1
+kind: ResourceSet
+metadata:
+  name: awsiamrole
+spec:
+  label: Amazon Role
+  icon:
+    svg: |
+      {{- .Files.Get "images/awsiam.svg" | nindent 6 }}
+  description: >-
+    Use an existing AWS IAM Role to access existing AWS resources without any
+    additional credentials. Requires the Role to be configured with a Trust 
+    Policy for using Pod Identity.
+  input:
+    - name: role_arn
+      label: Role ARN
+      kind: string
+      required: true
+  output:
+    - name: sa_name
+      source: ${sa.name}
+    - name: assocation_id
+      source: ${pia.status.associationID}
+  resources:
+    - id: pia
+      template:
+        apiVersion: eks.services.k8s.aws/v1alpha1
+        kind: PodIdentityAssociation
+        spec:
+          clusterName: {{ .Values.resources.awsiamrole.clusterName }}
+          namespace: ${pia.namespace}
+          serviceAccount: ${sa.name}
+          roleARN: ${input.role_arn}
+    - id: sa
+      template:
+        apiVersion: v1
+        kind: ServiceAccount
+{{- end }}
