@@ -2,9 +2,9 @@
 apiVersion: cps1.tech/v1alpha1
 kind: ResourceSet
 metadata:
-  name: awsiamrolepia
+  name: awsiamroleirsa
 spec:
-  label: Amazon Role Pod Identity Association
+  label: Amazon Role IRSA
   icon:
     svg: |
       {{- .Files.Get "images/awsiam.svg" | nindent 6 }}
@@ -19,20 +19,12 @@ spec:
   output:
     - name: sa_name
       source: ${sa.name}
-    - name: assocation_id
-      source: ${pia.status.associationID}
   resources:
-    - id: pia
-      template:
-        apiVersion: eks.services.k8s.aws/v1alpha1
-        kind: PodIdentityAssociation
-        spec:
-          clusterName: {{ .Values.resources.awsiamrole.clusterName }}
-          namespace: ${pia.namespace}
-          serviceAccount: ${sa.name}
-          roleARN: ${input.role_arn}
     - id: sa
       template:
         apiVersion: v1
         kind: ServiceAccount
+        metadata:
+          annotations:
+            eks.amazonaws.com/role-arn: ${input.role_arn}
 {{- end }}
