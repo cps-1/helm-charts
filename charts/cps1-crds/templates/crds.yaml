@@ -334,6 +334,32 @@ spec:
                       - Internal
                       - External
                       type: string
+                    externalConfig:
+                      nullable: true
+                      properties:
+                        authHeaderName:
+                          nullable: true
+                          type: string
+                        authHeaderValue:
+                          nullable: true
+                          type: string
+                        authMethod:
+                          default: Cookie
+                          enum:
+                          - Cookie
+                          - None
+                          - Header
+                          type: string
+                        path:
+                          nullable: true
+                          type: string
+                        routingMethod:
+                          default: Subdomain
+                          enum:
+                          - Subdomain
+                          - Path
+                          type: string
+                      type: object
                     port:
                       format: int32
                       maximum: 65535.0
@@ -983,6 +1009,32 @@ spec:
                             - Internal
                             - External
                             type: string
+                          externalConfig:
+                            nullable: true
+                            properties:
+                              authHeaderName:
+                                nullable: true
+                                type: string
+                              authHeaderValue:
+                                nullable: true
+                                type: string
+                              authMethod:
+                                default: Cookie
+                                enum:
+                                - Cookie
+                                - None
+                                - Header
+                                type: string
+                              path:
+                                nullable: true
+                                type: string
+                              routingMethod:
+                                default: Subdomain
+                                enum:
+                                - Subdomain
+                                - Path
+                                type: string
+                            type: object
                           port:
                             format: int32
                             maximum: 65535.0
@@ -1466,6 +1518,32 @@ spec:
                             - Internal
                             - External
                             type: string
+                          externalConfig:
+                            nullable: true
+                            properties:
+                              authHeaderName:
+                                nullable: true
+                                type: string
+                              authHeaderValue:
+                                nullable: true
+                                type: string
+                              authMethod:
+                                default: Cookie
+                                enum:
+                                - Cookie
+                                - None
+                                - Header
+                                type: string
+                              path:
+                                nullable: true
+                                type: string
+                              routingMethod:
+                                default: Subdomain
+                                enum:
+                                - Subdomain
+                                - Path
+                                type: string
+                            type: object
                           port:
                             format: int32
                             maximum: 65535.0
@@ -1864,6 +1942,32 @@ spec:
                       - Internal
                       - External
                       type: string
+                    externalConfig:
+                      nullable: true
+                      properties:
+                        authHeaderName:
+                          nullable: true
+                          type: string
+                        authHeaderValue:
+                          nullable: true
+                          type: string
+                        authMethod:
+                          default: Cookie
+                          enum:
+                          - Cookie
+                          - None
+                          - Header
+                          type: string
+                        path:
+                          nullable: true
+                          type: string
+                        routingMethod:
+                          default: Subdomain
+                          enum:
+                          - Subdomain
+                          - Path
+                          type: string
+                      type: object
                     port:
                       format: int32
                       maximum: 65535.0
@@ -2378,6 +2482,32 @@ spec:
                                 - Internal
                                 - External
                                 type: string
+                              externalConfig:
+                                nullable: true
+                                properties:
+                                  authHeaderName:
+                                    nullable: true
+                                    type: string
+                                  authHeaderValue:
+                                    nullable: true
+                                    type: string
+                                  authMethod:
+                                    default: Cookie
+                                    enum:
+                                    - Cookie
+                                    - None
+                                    - Header
+                                    type: string
+                                  path:
+                                    nullable: true
+                                    type: string
+                                  routingMethod:
+                                    default: Subdomain
+                                    enum:
+                                    - Subdomain
+                                    - Path
+                                    type: string
+                                type: object
                               port:
                                 format: int32
                                 maximum: 65535.0
