@@ -2,6 +2,18 @@ apiVersion: v1
 entries:
   cps1-catalog:
   - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2026-06-21T17:44:57.825489424Z"
+    description: Helm chart with a collection of Resources, Templates and Packages
+      for the CPS1 Platform
+    digest: 87a1f06f9d6da93b3148a365f930863463cd9f17ff103ded7e233c043ea13e2f
+    kubeVersion: '>= 1.30.0-0'
+    name: cps1-catalog
+    type: application
+    urls:
+    - cps1-catalog-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v2
     appVersion: 0.7.0
     created: "2026-03-05T14:26:14.057194555Z"
     description: Helm chart with a collection of Resources, Templates and Packages
@@ -361,6 +373,17 @@ entries:
     version: 0.0.20250506-N
   cps1-crds:
   - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2026-06-21T17:44:58.004245614Z"
+    description: CPS1 Custom Resource Definitions
+    digest: ab274c83824e108c003cd97a66b0c739f17edcd39a2feaaf48800e656ea34f80
+    kubeVersion: '>= 1.30.0-0'
+    name: cps1-crds
+    type: application
+    urls:
+    - cps1-crds-0.8.0.tgz
+    version: 0.8.0
+  - apiVersion: v2
     appVersion: 0.7.0
     created: "2026-03-05T14:26:14.229092176Z"
     description: CPS1 Custom Resource Definitions
@@ -560,6 +583,18 @@ entries:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-crds-0.0.20250606-N/cps1-crds-0.0.20250606-N.tgz
     version: 0.0.20250606-N
   cps1-platform:
+  - apiVersion: v2
+    appVersion: 0.8.0
+    created: "2026-06-21T17:44:58.190162391Z"
+    description: Helm chart to install CPS1 Cloud Develpment Environment in your Kubernetes
+      cluster
+    digest: b1a10b47624371212826c64a0be2040d3b2f3decae416d0ebf9cf8b67787ecc2
+    kubeVersion: '>= 1.30.0-0'
+    name: cps1-platform
+    type: application
+    urls:
+    - cps1-platform-0.8.0.tgz
+    version: 0.8.0
   - apiVersion: v2
     appVersion: 0.7.0
     created: "2026-03-05T14:26:14.425057116Z"
@@ -823,4 +858,4 @@ entries:
     urls:
     - https://github.com/cps-1/helm-charts/releases/download/cps1-platform-0.0.20250610-N/cps1-platform-0.0.20250610-N.tgz
     version: 0.0.20250610-N
-generated: "2026-03-05T14:26:14.425505932Z"
+generated: "2026-06-21T17:44:58.190499085Z"
